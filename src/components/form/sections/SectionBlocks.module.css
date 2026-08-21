@@ -1,0 +1,61 @@
+.sectionRoot {
+  display: grid;
+  gap: 1rem;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.sectionDescription {
+  margin: 0;
+  color: #64748b;
+}
+
+.addButton {
+  border: 1px solid #93c5fd;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-radius: 0.5rem;
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+}
+
+.itemCard {
+  border: 1px solid #dbeafe;
+  background: #f8fbff;
+  border-radius: 0.75rem;
+  padding: 0.85rem;
+}
+
+.itemTitle {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.fieldGrid {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.select {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  padding: 0.55rem 0.65rem;
+  background: #fff;
+}
+
+@media (min-width: 768px) {
+  .fieldGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

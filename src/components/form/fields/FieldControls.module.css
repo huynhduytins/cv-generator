@@ -1,0 +1,84 @@
+.fieldRoot {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.9rem;
+}
+
+.labelRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.required {
+  color: #dc2626;
+}
+
+.helperText {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.errorText {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #b91c1c;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  padding: 0.55rem 0.65rem;
+  line-height: 1.25;
+  outline: none;
+  background: #fff;
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.input {
+  height: 2.8rem;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.16);
+}
+
+.textarea {
+  min-height: 6.5rem;
+  resize: vertical;
+}
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus,
+.textarea:-webkit-autofill,
+.textarea:-webkit-autofill:hover,
+.textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: #0f172a;
+  box-shadow:
+    0 0 0 1000px #ffffff inset,
+    0 0 0 3px rgba(59, 130, 246, 0);
+  transition: background-color 9999s ease-out;
+}
+
+.arrayControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.arrayButton {
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.65rem;
+  background: #f8fafc;
+  cursor: pointer;
+}
