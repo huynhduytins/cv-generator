@@ -1,6 +1,7 @@
 .sectionRoot {
   display: grid;
-  gap: 1rem;
+  margin-top: 1rem;
+  gap: 1.5rem;
 }
 
 .sectionHeader {
@@ -44,6 +45,17 @@
 .fieldGrid {
   display: grid;
   gap: 0.7rem;
+}
+
+.checkboxRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  width: fit-content;
+  justify-self: start;
+  align-self: center;
+  font-size: 0.9rem;
+  color: #334155;
 }
 
 .select {

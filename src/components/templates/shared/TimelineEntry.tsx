@@ -6,22 +6,63 @@ import RichTextBlock from "./RichTextBlock";
 interface TimelineEntryProps {
   title: string;
   subtitle?: string;
+  secondaryLine?: string;
+  secondaryLineItalic?: boolean;
   meta?: string;
+  gpa?: string;
+  metaSecondary?: string;
+  metaSecondaryItalic?: boolean;
   body?: string;
   bullets?: string[];
   footer?: ReactNode;
 }
 
-const TimelineEntry = ({ title, subtitle, meta, body, bullets, footer }: TimelineEntryProps) => {
+const TimelineEntry = ({
+  title,
+  subtitle,
+  secondaryLine,
+  secondaryLineItalic = false,
+  meta,
+  gpa,
+  metaSecondary,
+  metaSecondaryItalic = false,
+  body,
+  bullets,
+  footer,
+}: TimelineEntryProps) => {
   return (
     <article className={styles.timelineRow}>
       <div className={styles.timelineHeader}>
-        <h3 className={styles.timelineTitle}>
-          {title}
-          {subtitle ? `, ${subtitle}` : ""}
-        </h3>
-        {meta ? <p className={styles.timelineMeta}>{meta}</p> : null}
+        <div>
+          <h3 className={styles.timelineTitle}>
+            {title}
+            {subtitle ? `, ${subtitle}` : ""}
+          </h3>
+          {metaSecondary ? (
+            <p
+              className={`${styles.timelineMetaSecondary} ${metaSecondaryItalic ? styles.timelineMetaSecondaryItalic : ""
+                }`.trim()}
+            >
+              {metaSecondary}
+            </p>
+          ) : null}
+        </div>
+        {meta || metaSecondary ? (
+          <div className={styles.timelineMetaGroup}>
+            {meta ? <p className={styles.timelineMeta}>{meta}</p> : null}
+            {gpa ? <p className={`${styles.timelineMetaSecondary} ${metaSecondaryItalic ? styles.timelineMetaSecondaryItalic : ""
+              }`.trim()}>{gpa}</p> : null}
+          </div>
+        ) : null}
       </div>
+      {secondaryLine ? (
+        <p
+          className={`${styles.timelineSecondary} ${secondaryLineItalic ? styles.timelineSecondaryItalic : ""
+            }`.trim()}
+        >
+          {secondaryLine}
+        </p>
+      ) : null}
       {body ? <RichTextBlock text={body} className={styles.timelineBody} /> : null}
       {bullets && bullets.length > 0 ? (
         <ul className={styles.list}>

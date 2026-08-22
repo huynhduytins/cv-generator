@@ -126,13 +126,40 @@
   margin: 0;
   color: #64748b;
   font-size: 0.85rem;
-  text-align: right;
+  text-align: left;
+}
+
+.timelineMetaGroup {
+  display: grid;
+  justify-items: end;
+  gap: 0.1rem;
+}
+
+.timelineMetaSecondary {
+  margin: 0;
+  color: #475569;
+  font-size: 0.8rem;
+}
+
+.timelineMetaSecondaryItalic {
+  font-style: italic;
 }
 
 .timelineBody {
   margin: 0;
   color: #1e293b;
   white-space: pre-line;
+}
+
+.timelineSecondary {
+  margin: -0.1rem 0 0;
+  color: #475569;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.timelineSecondaryItalic {
+  font-style: italic;
 }
 
 .textBlock {

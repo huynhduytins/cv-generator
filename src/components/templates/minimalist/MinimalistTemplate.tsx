@@ -36,8 +36,9 @@ const MinimalistTemplate = ({ viewModel, contactDisplayMode }: MinimalistTemplat
           {viewModel.workExperience.map((item) => (
             <TimelineEntry
               key={item.id}
-              title={item.role || "Role"}
-              subtitle={item.company || undefined}
+              title={item.company || "Company"}
+              secondaryLine={item.role || undefined}
+              secondaryLineItalic
               meta={[item.location, item.periodLabel].filter(Boolean).join(" | ")}
               body={item.summary}
               bullets={item.highlights}
@@ -48,15 +49,23 @@ const MinimalistTemplate = ({ viewModel, contactDisplayMode }: MinimalistTemplat
 
       {viewModel.education.length > 0 ? (
         <SectionBlock title="Education">
-          {viewModel.education.map((item) => (
-            <TimelineEntry
+          {viewModel.education.map((item) => {
+            const educationCore = [item.degree, item.fieldOfStudy]
+              .filter(Boolean)
+              .join(". ");
+            const gpa = item.gpa ? `GPA: ${item.gpa}` : "";
+            const educationMetaSecondary = educationCore;
+
+            return <TimelineEntry
               key={item.id}
-              title={item.degree || "Degree"}
-              subtitle={[item.fieldOfStudy, item.institution].filter(Boolean).join(", ") || undefined}
-              meta={[item.location, item.periodLabel].filter(Boolean).join(" | ")}
+              title={item.institution || "Institution"}
+              meta={[item.periodLabel, item.location].filter(Boolean).join(" / ")}
+              metaSecondary={educationMetaSecondary || undefined}
+              metaSecondaryItalic
+              gpa={gpa}
               body={item.description}
             />
-          ))}
+          })}
         </SectionBlock>
       ) : null}
 

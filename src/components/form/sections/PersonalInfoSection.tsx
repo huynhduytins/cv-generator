@@ -15,11 +15,6 @@ const noop = () => undefined;
 const PersonalInfoSection = ({ value, onUpdate, errors }: PersonalInfoSectionProps) => {
   return (
     <section className={styles.sectionRoot}>
-      <header>
-        <h2 className={styles.sectionTitle}>Personal Info</h2>
-        <p className={styles.sectionDescription}>Your identity and quick intro.</p>
-      </header>
-
       <div className={styles.fieldGrid}>
         <TextField
           label="Full Name"

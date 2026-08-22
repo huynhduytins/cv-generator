@@ -27,12 +27,8 @@ const WorkExperienceSection = ({
   return (
     <section className={styles.sectionRoot}>
       <header className={styles.sectionHeader}>
-        <div>
-          <h2 className={styles.sectionTitle}>Work Experience</h2>
-          <p className={styles.sectionDescription}>Role history and impact highlights.</p>
-        </div>
         <button type="button" className={styles.addButton} onClick={onAdd}>
-          Add experience
+          + Add experience
         </button>
       </header>
 
@@ -67,6 +63,35 @@ const WorkExperienceSection = ({
                 })
               }
             />
+            <DateField
+              label="End Date"
+              value={item.dateRange.endDate ?? ""}
+              disabled={item.dateRange.isPresent}
+              onChange={(nextValue) =>
+                onUpdate(item.id, {
+                  dateRange: {
+                    ...item.dateRange,
+                    endDate: nextValue ? (nextValue as ISODate) : null,
+                  },
+                })
+              }
+            />
+            <label className={styles.checkboxRow}>
+              <input
+                type="checkbox"
+                checked={item.dateRange.isPresent}
+                onChange={(event) =>
+                  onUpdate(item.id, {
+                    dateRange: {
+                      ...item.dateRange,
+                      isPresent: event.target.checked,
+                      endDate: event.target.checked ? null : item.dateRange.endDate,
+                    },
+                  })
+                }
+              />
+              <span>I am currently working in this role</span>
+            </label>
           </div>
           <TextArea
             label="Summary"

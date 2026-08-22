@@ -21,12 +21,8 @@ const ProjectsSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: Projec
   return (
     <section className={styles.sectionRoot}>
       <header className={styles.sectionHeader}>
-        <div>
-          <h2 className={styles.sectionTitle}>Projects</h2>
-          <p className={styles.sectionDescription}>Notable projects and outcomes.</p>
-        </div>
         <button type="button" className={styles.addButton} onClick={onAdd}>
-          Add project
+          + Add project
         </button>
       </header>
 

@@ -44,9 +44,13 @@ const parseBlocks = (text: string): RichBlock[] => {
   return blocks;
 };
 
-const renderInlineBold = (text: string): ReactNode[] => {
-  const boldPattern = /(\*\*[^*]+\*\*)/g;
-  return text.split(boldPattern).map((chunk, index) => {
+const renderInlineFormat = (text: string): ReactNode[] => {
+  const inlinePattern = /(\*\*\*[^*]+\*\*\*|\*\*[^*]+\*\*)/g;
+  return text.split(inlinePattern).map((chunk, index) => {
+    if (chunk.startsWith("***") && chunk.endsWith("***")) {
+      return <em key={`${chunk}-${index}`}>{chunk.slice(3, -3)}</em>;
+    }
+
     if (chunk.startsWith("**") && chunk.endsWith("**")) {
       return <strong key={`${chunk}-${index}`}>{chunk.slice(2, -2)}</strong>;
     }
@@ -72,7 +76,7 @@ const RichTextBlock = ({ text, className }: RichTextBlockProps) => {
               className={`${styles.richList} ${className ?? ""}`.trim()}
             >
               {block.items.map((item, itemIndex) => (
-                <li key={`${item}-${itemIndex}`}>{renderInlineBold(item)}</li>
+                <li key={`${item}-${itemIndex}`}>{renderInlineFormat(item)}</li>
               ))}
             </ul>
           );
@@ -83,7 +87,7 @@ const RichTextBlock = ({ text, className }: RichTextBlockProps) => {
             key={`p-${index}`}
             className={`${styles.richParagraph} ${className ?? ""}`.trim()}
           >
-            {renderInlineBold(block.text)}
+            {renderInlineFormat(block.text)}
           </p>
         );
       })}

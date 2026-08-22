@@ -55,14 +55,6 @@ const AccordionNavigator = ({
                   </span>
                 ) : null}
               </button>
-              <button
-                type="button"
-                className={styles.jumpButton}
-                aria-label={`Jump to ${item.label}`}
-                onClick={() => onJumpToSection(item.key)}
-              >
-                {activeStep === item.key ? "Current" : "Open"}
-              </button>
             </div>
 
             {item.description ? <p className={styles.description}>{item.description}</p> : null}

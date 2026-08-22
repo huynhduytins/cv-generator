@@ -69,9 +69,22 @@ export const createUiSlice: StateCreator<
     });
   },
   toggleSectionExpanded: (section) => {
-    set({
-      activeStep: section,
-      expandedSections: getExclusiveExpandedSections(section),
+    set((state) => {
+      const isCurrentlyExpanded = state.expandedSections[section];
+
+      if (isCurrentlyExpanded) {
+        return {
+          expandedSections: {
+            ...state.expandedSections,
+            [section]: false,
+          },
+        };
+      }
+
+      return {
+        activeStep: section,
+        expandedSections: getExclusiveExpandedSections(section),
+      };
     });
   },
   setContactDisplayMode: (mode) => {

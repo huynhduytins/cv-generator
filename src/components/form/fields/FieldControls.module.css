@@ -56,6 +56,14 @@
   resize: vertical;
 }
 
+.input:disabled,
+.textarea:disabled {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
 .input:-webkit-autofill,
 .input:-webkit-autofill:hover,
 .input:-webkit-autofill:focus,

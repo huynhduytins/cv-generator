@@ -29,6 +29,7 @@ export interface Education {
   institution: string;
   degree: string;
   fieldOfStudy: string;
+  gpa: string;
   location: string;
   dateRange: DateRange;
   description: string;
@@ -130,6 +131,7 @@ export const createEmptyEducation = (id: Id): Education => ({
   institution: "",
   degree: "",
   fieldOfStudy: "",
+  gpa: "",
   location: "",
   dateRange: createEmptyDateRange(),
   description: "",

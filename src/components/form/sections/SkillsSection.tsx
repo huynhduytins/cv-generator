@@ -20,12 +20,8 @@ const SkillsSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: SkillsSe
   return (
     <section className={styles.sectionRoot}>
       <header className={styles.sectionHeader}>
-        <div>
-          <h2 className={styles.sectionTitle}>Skills</h2>
-          <p className={styles.sectionDescription}>Core technologies and proficiencies.</p>
-        </div>
         <button type="button" className={styles.addButton} onClick={onAdd}>
-          Add skill
+          + Add skill
         </button>
       </header>
 

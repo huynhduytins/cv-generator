@@ -22,6 +22,7 @@ export interface PreviewEducationItem {
   institution: string;
   degree: string;
   fieldOfStudy: string;
+  gpa: string;
   location: string;
   periodLabel: string;
   description: string;
@@ -99,6 +100,42 @@ const buildPeriodLabel = (
   }
 
   return `${startLabel} - ${endLabel}`;
+};
+
+const isFutureMonthYear = (rawDate: string): boolean => {
+  if (!rawDate) {
+    return false;
+  }
+
+  const date = new Date(rawDate);
+  if (Number.isNaN(date.getTime())) {
+    return false;
+  }
+
+  const now = new Date();
+  const targetYear = date.getFullYear();
+  const targetMonth = date.getMonth();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth();
+
+  return targetYear > currentYear || (targetYear === currentYear && targetMonth > currentMonth);
+};
+
+const buildEducationPeriodLabel = (
+  startDate: string,
+  endDate: string | null,
+): string => {
+  const label = buildPeriodLabel(startDate, endDate, false);
+  if (!endDate || !isFutureMonthYear(endDate)) {
+    return label;
+  }
+
+  const endLabel = formatDateLabel(endDate);
+  if (!endLabel) {
+    return label;
+  }
+
+  return label.replace(endLabel, `${endLabel} (Expected)`);
 };
 
 const toLinkIfNeeded = (key: PreviewContactItem["key"], value: string): string | undefined => {
@@ -196,8 +233,9 @@ export const mapCvToPreview = (document: CvDocument): CvPreviewViewModel => {
     institution: item.institution.trim(),
     degree: item.degree.trim(),
     fieldOfStudy: item.fieldOfStudy.trim(),
+    gpa: item.gpa?.trim(),
     location: item.location.trim(),
-    periodLabel: buildPeriodLabel(item.dateRange.startDate, item.dateRange.endDate, item.dateRange.isPresent),
+    periodLabel: buildEducationPeriodLabel(item.dateRange.startDate, item.dateRange.endDate),
     description: item.description.trim(),
   }));
 

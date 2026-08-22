@@ -21,12 +21,8 @@ const EducationSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: Educa
   return (
     <section className={styles.sectionRoot}>
       <header className={styles.sectionHeader}>
-        <div>
-          <h2 className={styles.sectionTitle}>Education</h2>
-          <p className={styles.sectionDescription}>Academic background and credentials.</p>
-        </div>
         <button type="button" className={styles.addButton} onClick={onAdd}>
-          Add education
+          + Add education
         </button>
       </header>
 
@@ -52,12 +48,36 @@ const EducationSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: Educa
               onChange={noop}
               onDebouncedChange={(nextValue) => onUpdate(item.id, { fieldOfStudy: nextValue })}
             />
+            <TextField
+              label="GPA"
+              value={item.gpa}
+              onChange={noop}
+              onDebouncedChange={(nextValue) => onUpdate(item.id, { gpa: nextValue })}
+              placeholder="e.g. 3.8/4.0"
+            />
             <DateField
               label="Start Date"
               value={item.dateRange.startDate}
               onChange={(nextValue) =>
                 onUpdate(item.id, {
-                  dateRange: { ...item.dateRange, startDate: nextValue as ISODate },
+                  dateRange: {
+                    ...item.dateRange,
+                    startDate: nextValue as ISODate,
+                    isPresent: false,
+                  },
+                })
+              }
+            />
+            <DateField
+              label="End Date"
+              value={item.dateRange.endDate ?? ""}
+              onChange={(nextValue) =>
+                onUpdate(item.id, {
+                  dateRange: {
+                    ...item.dateRange,
+                    endDate: nextValue ? (nextValue as ISODate) : null,
+                    isPresent: false,
+                  },
                 })
               }
             />
