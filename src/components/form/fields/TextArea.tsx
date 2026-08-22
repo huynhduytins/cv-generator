@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import styles from "./FieldControls.module.css";
 
@@ -29,20 +29,25 @@ const TextArea = ({
 }: TextAreaProps) => {
   const inputId = useId();
   const [localValue, setLocalValue] = useState(value);
+  const onDebouncedChangeRef = useRef<typeof onDebouncedChange>(onDebouncedChange);
 
   useEffect(() => {
-    if (!onDebouncedChange) {
+    onDebouncedChangeRef.current = onDebouncedChange;
+  }, [onDebouncedChange]);
+
+  useEffect(() => {
+    if (!onDebouncedChangeRef.current) {
       return;
     }
 
     const timeoutId = window.setTimeout(() => {
-      onDebouncedChange(localValue);
+      onDebouncedChangeRef.current?.(localValue);
     }, debounceMs);
 
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [debounceMs, localValue, onDebouncedChange]);
+  }, [debounceMs, localValue]);
 
   return (
     <div className={styles.fieldRoot}>

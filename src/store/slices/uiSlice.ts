@@ -4,12 +4,16 @@ import { CV_SECTION_ORDER, type CvSectionStep } from "../../types/cv";
 
 import type { CvStore } from "../cv-store";
 
+export type ContactDisplayMode = "label" | "icon";
+
 export interface UiSlice {
   activeStep: CvSectionStep;
   expandedSections: Record<CvSectionStep, boolean>;
+  contactDisplayMode: ContactDisplayMode;
   setActiveStep: (step: CvSectionStep) => void;
   setSectionExpanded: (section: CvSectionStep, expanded: boolean) => void;
   toggleSectionExpanded: (section: CvSectionStep) => void;
+  setContactDisplayMode: (mode: ContactDisplayMode) => void;
   resetUiState: () => void;
 }
 
@@ -47,6 +51,7 @@ export const createUiSlice: StateCreator<
 > = (set) => ({
   activeStep: "personalInfo",
   expandedSections: { ...defaultExpandedSections },
+  contactDisplayMode: "label",
   setActiveStep: (step) => {
     set({
       activeStep: step,
@@ -69,10 +74,14 @@ export const createUiSlice: StateCreator<
       expandedSections: getExclusiveExpandedSections(section),
     });
   },
+  setContactDisplayMode: (mode) => {
+    set({ contactDisplayMode: mode });
+  },
   resetUiState: () => {
     set({
       activeStep: "personalInfo",
       expandedSections: { ...defaultExpandedSections },
+      contactDisplayMode: "label",
     });
   },
 });

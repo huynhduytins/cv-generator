@@ -9,6 +9,7 @@ import ProjectsSection from "@/components/form/sections/ProjectsSection";
 import SkillsSection from "@/components/form/sections/SkillsSection";
 import WorkExperienceSection from "@/components/form/sections/WorkExperienceSection";
 import CvBuilderShell from "@/components/layout/CvBuilderShell";
+import LivePreview from "@/components/preview/LivePreview";
 import { useClientReady } from "@/hooks/useClientReady";
 import { useCvFormController } from "@/hooks/useCvFormController";
 import { validateCvDocument } from "@/lib/validation/cv-validation";
@@ -100,15 +101,7 @@ const CvBuilderClient = () => {
         />
       }
       preview={
-        <div>
-          <p style={{ marginTop: 0 }}>Preview placeholder</p>
-          <p style={{ color: "#64748b" }}>
-            Live preview implementation starts in Phase 3.
-          </p>
-          <p style={{ color: "#64748b" }}>
-            Last saved at: {controller.lastSavedAt ?? "Not saved yet"}
-          </p>
-        </div>
+        <LivePreview />
       }
     />
   );

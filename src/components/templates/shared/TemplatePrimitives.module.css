@@ -1,0 +1,178 @@
+.sheet {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #dbe2ea;
+  padding-bottom: 0.85rem;
+}
+
+.name {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.headline {
+  margin: 0.35rem 0 0;
+  color: #334155;
+}
+
+.contacts {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.contactsIconMode {
+  gap: 1.25rem;
+}
+
+.contactsIconMode > * {
+  position: relative;
+}
+
+.contactsIconMode > * + *::before {
+  content: "";
+  position: absolute;
+  left: -0.36rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 1rem;
+  background: #cbd5e1;
+}
+
+.contactChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 1rem;
+  color: #1e293b;
+  text-decoration: none;
+}
+
+.contactPlain {
+  border: none;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+}
+
+.contactLabel {
+  color: #64748b;
+}
+
+.contactIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.8rem;
+  height: 1.2rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+  color: #334155;
+}
+
+.section {
+  margin-top: 1.5rem;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #334155;
+}
+
+.sectionDivider {
+  margin: 0.5rem 0 0.75rem;
+  border: 0;
+  border-top: 1px solid #1a1a1a;
+}
+
+.timelineRow {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.timelineHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.timelineTitle {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.timelineMeta {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+.timelineBody {
+  margin: 0;
+  color: #1e293b;
+  white-space: pre-line;
+}
+
+.textBlock {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.richParagraph {
+  margin: 0 0 0.4rem;
+}
+
+.richList {
+  margin: 0.2rem 0 0.6rem;
+  padding-left: 1.9rem;
+  list-style-position: outside;
+}
+
+.list {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.listItem {
+  margin-bottom: 0.25rem;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.tag {
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.78rem;
+  color: #334155;
+}
+
+.href {
+  color: #2563eb;
+}
