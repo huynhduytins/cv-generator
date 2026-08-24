@@ -1,6 +1,7 @@
 # Web CV Generator - Execution Plan
 
 ## Planning Principles (Derived from Specs + Project Rules)
+
 - Build in strict sequence from data foundation to UI shell, then preview, export, and refinements.
 - Keep a single source of truth in Zustand with immutable updates and explicit actions.
 - Use strict TypeScript throughout (`no any`), with clear domain models for all CV sections.
@@ -8,6 +9,7 @@
 - Validate each phase with architectural and quality checks before moving forward.
 
 ## Suggested Project Structure Baseline
+
 - `src/types/` - domain types and DTOs for CV data.
 - `src/store/` - Zustand store slices, actions, persistence adapter.
 - `src/hooks/` - form orchestration, debounced autosave, preview selectors.
@@ -23,12 +25,14 @@
 ## Phase 1 - Core Data Architecture & State Management
 
 ### Clear Objectives
+
 - Define the canonical CV domain model with strict TypeScript types.
 - Implement a robust Zustand store as the single source of truth.
 - Add local draft persistence with auto-save and safe hydration.
 - Establish state boundaries to avoid unnecessary re-renders for preview/export flows.
 
 ### Actionable Tasks
+
 1. Define top-level CV entities: `PersonalInfo`, `WorkExperience`, `Education`, `Skill`, `Project`, and `CvDocument`; also decide and document the exact PDF engine (`react-pdf` vs `html2pdf`) so Phase 3 template layout structure aligns with the chosen rendering pipeline.
 2. Add reusable primitives (`Id`, `ISODate`, optional vs required field conventions, discriminated unions where needed).
 3. Create type-safe action contracts for CRUD operations per section (add, update, reorder, remove).
@@ -44,6 +48,7 @@
 10. Document state conventions and update contracts in a short architecture note.
 
 ### Key Deliverables
+
 - `src/types/cv.ts`
 - `src/types/common.ts`
 - `src/store/cv-store.ts`
@@ -57,6 +62,7 @@
 - `docs/architecture/state-management.md`
 
 ### Architectural & Quality Checks (Exit Criteria)
+
 - Type safety: `tsc --noEmit` passes with zero `any` usage in new modules.
 - State isolation: form inputs subscribe to narrow selectors; preview subscribes to computed view model selectors only.
 - Persistence integrity: refresh restores draft accurately; corrupted storage falls back safely to default state.
@@ -68,11 +74,13 @@
 ## Phase 2 - Layout Shell & Multi-step/Accordion Form Controls
 
 ### Clear Objectives
+
 - Build the core app shell with responsive editor/preview layout.
 - Implement sectioned form controls using multi-step or accordion interactions.
 - Keep UI presentation-focused while delegating data logic to hooks/store actions.
 
 ### Actionable Tasks
+
 1. Create App Router page scaffold for CV builder route.
 2. Implement base shell layout:
    - left pane: form editor,
@@ -97,6 +105,7 @@
 10. Add accessibility checks for keyboard navigation and focus management across accordion/step transitions.
 
 ### Key Deliverables
+
 - `src/app/page.tsx` (or builder route entry)
 - `src/components/layout/CvBuilderShell.tsx`
 - `src/components/form/StepNavigator.tsx`
@@ -112,6 +121,7 @@
 - `src/components/form/__tests__/*`
 
 ### Architectural & Quality Checks (Exit Criteria)
+
 - Separation of concerns: no business logic embedded in low-level field components.
 - Type safety: typed props for all form components; no unsafe casts.
 - State contract compliance: all user edits flow through store actions only.
@@ -123,11 +133,13 @@
 ## Phase 3 - Real-time Live Preview Engine & Initial Template Component
 
 ### Clear Objectives
+
 - Implement real-time preview rendering synchronized with store updates.
 - Introduce first production-grade template component (e.g., Minimalist).
 - Ensure preview updates are responsive without excessive rerenders.
 
 ### Actionable Tasks
+
 1. Define a preview view model mapper to transform raw store data into template-ready data.
 2. Implement memoized selectors for preview data to minimize recomputation.
 3. Create `LivePreview` container connected to preview selector outputs.
@@ -140,6 +152,7 @@
 10. Verify preview fidelity against target CV layout expectations from spec.
 
 ### Key Deliverables
+
 - `src/lib/mappers/cv-to-preview.ts`
 - `src/store/selectors/preview-selectors.ts`
 - `src/components/preview/LivePreview.tsx`
@@ -149,6 +162,7 @@
 - `src/lib/mappers/__tests__/cv-to-preview.test.ts`
 
 ### Architectural & Quality Checks (Exit Criteria)
+
 - Render efficiency: preview rerenders only on relevant state changes (validated via profiling).
 - Mapping isolation: no direct store reads inside deeply nested presentational template pieces.
 - Type completeness: template props fully typed from preview view model, no implicit `unknown`/casts.
@@ -160,11 +174,13 @@
 ## Phase 4 - Client-side PDF Rendering Engine & Page Break Controls
 
 ### Clear Objectives
+
 - Build reliable client-side PDF export preserving template styling and pagination.
 - Add user-facing page break controls for problematic section splits.
 - Ensure export remains deterministic and privacy-preserving (no server dependency).
 
 ### Actionable Tasks
+
 1. Select and lock PDF strategy (`react-pdf` or `html2canvas + jspdf`) based on fidelity/performance trade-off, and implement `@media print` utility rules or page-break boundary guards (`break-inside: avoid`) for template elements.
 2. Build export service abstraction to decouple UI from rendering implementation.
 3. Implement template-to-pdf rendering path matching live preview structure.
@@ -177,6 +193,7 @@
 10. Add regression snapshots or checksum-based checks for core export scenarios.
 
 ### Key Deliverables
+
 - `src/lib/pdf/export-cv.ts`
 - `src/lib/pdf/renderers/*`
 - `src/lib/pdf/pagination.ts`
@@ -187,6 +204,7 @@
 - `docs/architecture/pdf-engine.md`
 
 ### Architectural & Quality Checks (Exit Criteria)
+
 - Fidelity check: exported PDF visually matches on-screen template within accepted tolerance.
 - Performance check: export completes within acceptable time on typical laptop hardware and medium CV size.
 - Determinism check: repeated exports from identical state produce consistent pagination.
@@ -198,11 +216,13 @@
 ## Phase 5 - Template Selector & Refinements
 
 ### Clear Objectives
+
 - Introduce multi-template selection with consistent data contracts.
 - Refine UX, performance, and quality across end-to-end workflow.
 - Prepare for maintainable extension (new templates, richer sections) without architectural churn.
 
 ### Actionable Tasks
+
 1. Define template registry contract (id, label, component, print settings compatibility).
 2. Implement template selector UI and persist selected template in store.
 3. Build at least one additional template variant sharing common primitives where possible.
@@ -219,6 +239,7 @@
 10. Prepare release checklist and known limitations list.
 
 ### Key Deliverables
+
 - `src/components/templates/template-registry.ts`
 - `src/components/templates/TemplateSelector.tsx`
 - `src/components/templates/<second-template>/*`
@@ -229,6 +250,7 @@
 - `docs/release-checklist.md`
 
 ### Architectural & Quality Checks (Exit Criteria)
+
 - Contract stability: all templates implement the same typed interface and render from the same view model.
 - Consistency: selected template affects both live preview and PDF output identically.
 - Scalability: adding a new template requires minimal changes outside registry and new template module.
@@ -238,6 +260,7 @@
 ---
 
 ## Cross-Phase Definition of Done
+
 - `npm run lint` passes.
 - `npm run typecheck` passes under strict TypeScript settings.
 - Targeted tests for the completed phase are green before progressing.

@@ -10,7 +10,10 @@ import styles from "./SectionBlocks.module.css";
 interface WorkExperienceSectionProps {
   items: WorkExperience[];
   onAdd: () => void;
-  onUpdate: (id: WorkExperience["id"], changes: Partial<WorkExperience>) => void;
+  onUpdate: (
+    id: WorkExperience["id"],
+    changes: Partial<WorkExperience>,
+  ) => void;
   onRemove: (id: WorkExperience["id"]) => void;
   onReorder: (fromIndex: number, toIndex: number) => void;
 }
@@ -40,26 +43,35 @@ const WorkExperienceSection = ({
               label="Company"
               value={item.company}
               onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { company: nextValue })}
+              onDebouncedChange={(nextValue) =>
+                onUpdate(item.id, { company: nextValue })
+              }
             />
             <TextField
               label="Role"
               value={item.role}
               onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { role: nextValue })}
+              onDebouncedChange={(nextValue) =>
+                onUpdate(item.id, { role: nextValue })
+              }
             />
             <TextField
               label="Location"
               value={item.location}
               onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { location: nextValue })}
+              onDebouncedChange={(nextValue) =>
+                onUpdate(item.id, { location: nextValue })
+              }
             />
             <DateField
               label="Start Date"
               value={item.dateRange.startDate}
               onChange={(nextValue) =>
                 onUpdate(item.id, {
-                  dateRange: { ...item.dateRange, startDate: nextValue as ISODate },
+                  dateRange: {
+                    ...item.dateRange,
+                    startDate: nextValue as ISODate,
+                  },
                 })
               }
             />
@@ -85,7 +97,9 @@ const WorkExperienceSection = ({
                     dateRange: {
                       ...item.dateRange,
                       isPresent: event.target.checked,
-                      endDate: event.target.checked ? null : item.dateRange.endDate,
+                      endDate: event.target.checked
+                        ? null
+                        : item.dateRange.endDate,
                     },
                   })
                 }
@@ -97,7 +111,9 @@ const WorkExperienceSection = ({
             label="Summary"
             value={item.summary}
             onChange={noop}
-            onDebouncedChange={(nextValue) => onUpdate(item.id, { summary: nextValue })}
+            onDebouncedChange={(nextValue) =>
+              onUpdate(item.id, { summary: nextValue })
+            }
           />
           <ArraySectionControls
             canMoveUp={index > 0}

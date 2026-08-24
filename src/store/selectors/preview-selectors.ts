@@ -1,6 +1,9 @@
 import type { CvDocument } from "@/types/cv";
 
-import { mapCvToPreview, type CvPreviewViewModel } from "@/lib/mappers/cv-to-preview";
+import {
+  mapCvToPreview,
+  type CvPreviewViewModel,
+} from "@/lib/mappers/cv-to-preview";
 
 import type { CvStore } from "../cv-store";
 

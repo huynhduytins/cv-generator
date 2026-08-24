@@ -9,7 +9,11 @@ interface StepNavigatorProps {
   onChangeStep: (step: CvSectionStep) => void;
 }
 
-const StepNavigator = ({ items, activeStep, onChangeStep }: StepNavigatorProps) => {
+const StepNavigator = ({
+  items,
+  activeStep,
+  onChangeStep,
+}: StepNavigatorProps) => {
   return (
     <nav className={styles.stepNav} aria-label="CV step navigator">
       {items.map((item, index) => {

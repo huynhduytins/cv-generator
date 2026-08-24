@@ -46,7 +46,9 @@ const toDisplayCategory = (rawCategory: string): string => {
 
   return normalized
     .split(/\s+/)
-    .map((token) => token.charAt(0).toUpperCase() + token.slice(1).toLowerCase())
+    .map(
+      (token) => token.charAt(0).toUpperCase() + token.slice(1).toLowerCase(),
+    )
     .join(" ");
 };
 
@@ -86,86 +88,99 @@ const MinimalistTemplate = forwardRef<HTMLElement, MinimalistTemplateProps>(
         data-template="minimalist"
         data-export-preview-root
       >
-      <TemplateHeader
-        fullName={identity.fullName}
-        headline={identity.headline}
-        contacts={identity.contacts}
-        contactDisplayMode={contactDisplayMode}
-      />
+        <TemplateHeader
+          fullName={identity.fullName}
+          headline={identity.headline}
+          contacts={identity.contacts}
+          contactDisplayMode={contactDisplayMode}
+        />
 
-      {identity.summary ? (
-        <SectionBlock title="Summary">
-          <RichTextBlock text={identity.summary} className={styles.timelineBody} />
-        </SectionBlock>
-      ) : null}
-
-      {viewModel.workExperience.length > 0 ? (
-        <SectionBlock title="Work Experience" sectionKey="workExperience">
-          {viewModel.workExperience.map((item) => (
-            <TimelineEntry
-              key={item.id}
-              title={item.company || "Company"}
-              secondaryLine={item.role || undefined}
-              secondaryLineItalic
-              meta={[item.location, item.periodLabel].filter(Boolean).join(" | ")}
-              body={item.summary}
-              bullets={item.highlights}
+        {identity.summary ? (
+          <SectionBlock title="Summary">
+            <RichTextBlock
+              text={identity.summary}
+              className={styles.timelineBody}
             />
-          ))}
-        </SectionBlock>
-      ) : null}
+          </SectionBlock>
+        ) : null}
 
-      {viewModel.education.length > 0 ? (
-        <SectionBlock title="Education" sectionKey="education">
-          {viewModel.education.map((item) => {
-            const educationCore = [item.degree, item.fieldOfStudy]
-              .filter(Boolean)
-              .join(". ");
-            const gpa = item.gpa ? `GPA: ${item.gpa}` : "";
-            const educationMetaSecondary = educationCore;
-
-            return <TimelineEntry
-              key={item.id}
-              title={item.institution || "Institution"}
-              meta={[item.periodLabel, item.location].filter(Boolean).join(" / ")}
-              metaSecondary={educationMetaSecondary || undefined}
-              metaSecondaryItalic
-              gpa={gpa}
-              body={item.description}
-            />
-          })}
-        </SectionBlock>
-      ) : null}
-
-      {viewModel.skills.length > 0 ? (
-        <SectionBlock title="Skills" sectionKey="skills">
-          <div className={styles.skillsLayout}>
-            {groupedSkills.map((group) => (
-              <p key={group.category} className={styles.skillsLine}>
-                <span className={styles.skillsCategory}>{group.category}:</span>{" "}
-                <span className={styles.skillsValues}>{group.skills.join(", ")}</span>
-              </p>
+        {viewModel.workExperience.length > 0 ? (
+          <SectionBlock title="Work Experience" sectionKey="workExperience">
+            {viewModel.workExperience.map((item) => (
+              <TimelineEntry
+                key={item.id}
+                title={item.company || "Company"}
+                secondaryLine={item.role || undefined}
+                secondaryLineItalic
+                meta={[item.location, item.periodLabel]
+                  .filter(Boolean)
+                  .join(" | ")}
+                body={item.summary}
+                bullets={item.highlights}
+              />
             ))}
-          </div>
-        </SectionBlock>
-      ) : null}
+          </SectionBlock>
+        ) : null}
 
-      {viewModel.projects.length > 0 ? (
-        <SectionBlock title="Projects" sectionKey="projects">
-          {viewModel.projects.map((item) => (
-            <TimelineEntry
-              key={item.id}
-              title={item.name || "Project"}
-              titleHref={normalizeExternalUrl(item.url)}
-              secondaryLine={item.role || undefined}
-              secondaryLineItalic
-              meta={item.periodLabel}
-              body={item.description}
-              bullets={item.highlights}
-            />
-          ))}
-        </SectionBlock>
-      ) : null}
+        {viewModel.education.length > 0 ? (
+          <SectionBlock title="Education" sectionKey="education">
+            {viewModel.education.map((item) => {
+              const educationCore = [item.degree, item.fieldOfStudy]
+                .filter(Boolean)
+                .join(". ");
+              const gpa = item.gpa ? `GPA: ${item.gpa}` : "";
+              const educationMetaSecondary = educationCore;
+
+              return (
+                <TimelineEntry
+                  key={item.id}
+                  title={item.institution || "Institution"}
+                  meta={[item.periodLabel, item.location]
+                    .filter(Boolean)
+                    .join(" / ")}
+                  metaSecondary={educationMetaSecondary || undefined}
+                  metaSecondaryItalic
+                  gpa={gpa}
+                  body={item.description}
+                />
+              );
+            })}
+          </SectionBlock>
+        ) : null}
+
+        {viewModel.skills.length > 0 ? (
+          <SectionBlock title="Skills" sectionKey="skills">
+            <div className={styles.skillsLayout}>
+              {groupedSkills.map((group) => (
+                <p key={group.category} className={styles.skillsLine}>
+                  <span className={styles.skillsCategory}>
+                    {group.category}:
+                  </span>{" "}
+                  <span className={styles.skillsValues}>
+                    {group.skills.join(", ")}
+                  </span>
+                </p>
+              ))}
+            </div>
+          </SectionBlock>
+        ) : null}
+
+        {viewModel.projects.length > 0 ? (
+          <SectionBlock title="Projects" sectionKey="projects">
+            {viewModel.projects.map((item) => (
+              <TimelineEntry
+                key={item.id}
+                title={item.name || "Project"}
+                titleHref={normalizeExternalUrl(item.url)}
+                secondaryLine={item.role || undefined}
+                secondaryLineItalic
+                meta={item.periodLabel}
+                body={item.description}
+                bullets={item.highlights}
+              />
+            ))}
+          </SectionBlock>
+        ) : null}
       </article>
     );
   },

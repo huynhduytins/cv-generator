@@ -47,7 +47,9 @@ const createDebouncedLocalStorage = (): StateStorage => {
   };
 };
 
-export const cvPersistStorage = createJSONStorage<PersistedCvState>(createDebouncedLocalStorage);
+export const cvPersistStorage = createJSONStorage<PersistedCvState>(
+  createDebouncedLocalStorage,
+);
 
 export const partializeCvStore = (state: CvStore): PersistedCvState => ({
   document: state.document,

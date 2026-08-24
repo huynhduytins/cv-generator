@@ -32,11 +32,13 @@ const sanitizeSkills = (skills: unknown): CvDocument["skills"] => {
       return [];
     }
 
-    return [{
-      id: id as Id,
-      name: typeof skill.name === "string" ? skill.name : "",
-      category: typeof skill.category === "string" ? skill.category : "",
-    }];
+    return [
+      {
+        id: id as Id,
+        name: typeof skill.name === "string" ? skill.name : "",
+        category: typeof skill.category === "string" ? skill.category : "",
+      },
+    ];
   });
 };
 

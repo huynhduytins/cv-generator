@@ -41,18 +41,34 @@ const PdfPreviewModal = ({
   }
 
   return (
-    <div className={styles.overlay} role="dialog" aria-modal="true" aria-label="PDF preview dialog">
+    <div
+      className={styles.overlay}
+      role="dialog"
+      aria-modal="true"
+      aria-label="PDF preview dialog"
+    >
       <div className={styles.modal}>
-        <p className={styles.title}>Here is a preview of your CV. Would you like to export it?</p>
+        <p className={styles.title}>
+          Here is a preview of your CV. Would you like to export it?
+        </p>
         <div className={styles.viewer}>
           {pdfUrl ? (
-            <iframe className={styles.iframe} title="Generated CV PDF" src={pdfUrl} />
+            <iframe
+              className={styles.iframe}
+              title="Generated CV PDF"
+              src={pdfUrl}
+            />
           ) : (
             <p className={styles.placeholder}>Generating preview...</p>
           )}
         </div>
         <div className={styles.actions}>
-          <button type="button" className={styles.secondaryButton} onClick={onCancel} disabled={isBusy}>
+          <button
+            type="button"
+            className={styles.secondaryButton}
+            onClick={onCancel}
+            disabled={isBusy}
+          >
             Cancel
           </button>
           <button

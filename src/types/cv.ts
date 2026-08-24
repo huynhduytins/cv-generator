@@ -60,11 +60,7 @@ export interface CvDocument {
 }
 
 export type CvSectionStep =
-  | "personalInfo"
-  | "workExperience"
-  | "education"
-  | "skills"
-  | "projects";
+  "personalInfo" | "workExperience" | "education" | "skills" | "projects";
 
 export const CV_SECTION_ORDER: CvSectionStep[] = [
   "personalInfo",

@@ -11,11 +11,12 @@ const getRequestOrigin = (request: Request): string => {
 };
 
 const createFilename = (fullName: string): string => {
-  const base = fullName
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .toLowerCase() || "cv";
+  const base =
+    fullName
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .toLowerCase() || "cv";
   const dayStamp = new Date().toISOString().slice(0, 10);
   return `${base}-${dayStamp}.pdf`;
 };
@@ -81,14 +82,21 @@ export const POST = async (request: Request): Promise<Response> => {
       height: 1122,
       deviceScaleFactor: 2,
     });
-    await page.setContent(htmlDocument, { waitUntil: "domcontentloaded", timeout: 60000 });
-    await page.waitForSelector('[data-export-preview-root]', { timeout: 60000 });
+    await page.setContent(htmlDocument, {
+      waitUntil: "domcontentloaded",
+      timeout: 60000,
+    });
+    await page.waitForSelector("[data-export-preview-root]", {
+      timeout: 60000,
+    });
     await page.waitForNetworkIdle({ idleTime: 500, timeout: 60000 });
     await page.evaluate(async () => {
       if ("fonts" in document) {
         await document.fonts.ready;
       }
-      await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+      await new Promise<void>((resolve) =>
+        requestAnimationFrame(() => resolve()),
+      );
     });
     await page.emulateMediaType("screen");
 
@@ -110,7 +118,8 @@ export const POST = async (request: Request): Promise<Response> => {
       },
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unexpected PDF export error.";
+    const message =
+      error instanceof Error ? error.message : "Unexpected PDF export error.";
     return NextResponse.json({ error: message }, { status: 400 });
   } finally {
     if (browser) {

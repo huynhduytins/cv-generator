@@ -12,7 +12,11 @@ interface PersonalInfoSectionProps {
 
 const noop = () => undefined;
 
-const PersonalInfoSection = ({ value, onUpdate, errors }: PersonalInfoSectionProps) => {
+const PersonalInfoSection = ({
+  value,
+  onUpdate,
+  errors,
+}: PersonalInfoSectionProps) => {
   return (
     <section className={styles.sectionRoot}>
       <div className={styles.fieldGrid}>

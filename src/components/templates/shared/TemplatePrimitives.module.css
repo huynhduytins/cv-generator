@@ -4,7 +4,9 @@
   border: 1px solid #e2e8f0;
   border-radius: 0.75rem;
   padding: 0.75rem 2.25rem;
-  font-family: "Courier New", Courier, monospace;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
 .header {
@@ -16,13 +18,15 @@
 
 .name {
   margin: 0;
-  font-size: 1.5rem;
-  line-height: 1.1;
+  font-size: 1.95rem;
+  line-height: 1.15;
 }
 
 .headline {
   margin: 0.35rem 0 0;
   color: #334155;
+  font-size: 1.04rem;
+  line-height: 1.35;
 }
 
 .contacts {
@@ -59,7 +63,8 @@
   border: 1px solid #cbd5e1;
   border-radius: 999px;
   padding: 0.2rem 0.55rem;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  line-height: 1.25;
   color: #1e293b;
   text-decoration: none;
   white-space: nowrap;
@@ -95,7 +100,8 @@
 
 .sectionTitle {
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.04rem;
+  line-height: 1.25;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: #334155;
@@ -116,16 +122,19 @@
 .timelineHeader {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: flex-start;
   gap: 1rem;
 }
 
 .timelineTitle {
   margin: 0;
-  font-size: 0.95rem;
-  display: inline-flex;
-  align-items: center;
+  font-size: 0.98rem;
+  display: block;
   gap: 0.28rem;
+  line-height: 1.25;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
 }
 
 .timelineTitleIconLink {
@@ -143,20 +152,26 @@
 .timelineMeta {
   margin: 0;
   color: #64748b;
-  font-size: 0.85rem;
-  text-align: left;
+  font-size: 0.84rem;
+  line-height: 1.25;
+  text-align: right;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: keep-all;
 }
 
 .timelineMetaGroup {
   display: grid;
   justify-items: end;
   gap: 0.1rem;
+  flex-shrink: 0;
 }
 
 .timelineMetaSecondary {
   margin: 0;
   color: #475569;
   font-size: 0.8rem;
+  line-height: 1.25;
 }
 
 .timelineMetaSecondaryItalic {
@@ -167,13 +182,16 @@
   margin: 0;
   color: #1e293b;
   white-space: pre-line;
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
 .timelineSecondary {
-  margin: -0.1rem 0 0;
+  margin: 0.12rem 0 0;
   color: #475569;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 400;
+  line-height: 1.35;
 }
 
 .timelineSecondaryItalic {
@@ -187,6 +205,7 @@
 
 .richParagraph {
   margin: 0 0 0.4rem;
+  line-height: 1.45;
 }
 
 .richList {
@@ -202,6 +221,7 @@
 
 .listItem {
   margin-bottom: 0.25rem;
+  line-height: 1.45;
 }
 
 .tags {
@@ -230,7 +250,8 @@
 .skillsLine {
   margin: 0;
   color: #1e293b;
-  line-height: 1.4;
+  font-size: 0.9rem;
+  line-height: 1.45;
 }
 
 .skillsCategory {

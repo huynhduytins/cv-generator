@@ -1,4 +1,11 @@
-import type { CvDocument, CvSectionStep, Education, Project, Skill, WorkExperience } from "@/types/cv";
+import type {
+  CvDocument,
+  CvSectionStep,
+  Education,
+  Project,
+  Skill,
+  WorkExperience,
+} from "@/types/cv";
 
 export interface PreviewContactItem {
   key: "email" | "phone" | "location" | "website" | "linkedin" | "github";
@@ -115,7 +122,10 @@ const isFutureMonthYear = (rawDate: string): boolean => {
   const currentYear = now.getFullYear();
   const currentMonth = now.getMonth();
 
-  return targetYear > currentYear || (targetYear === currentYear && targetMonth > currentMonth);
+  return (
+    targetYear > currentYear ||
+    (targetYear === currentYear && targetMonth > currentMonth)
+  );
 };
 
 const buildEducationPeriodLabel = (
@@ -135,7 +145,10 @@ const buildEducationPeriodLabel = (
   return label.replace(endLabel, `${endLabel} (Expected)`);
 };
 
-const toLinkIfNeeded = (key: PreviewContactItem["key"], value: string): string | undefined => {
+const toLinkIfNeeded = (
+  key: PreviewContactItem["key"],
+  value: string,
+): string | undefined => {
   if (!value.trim()) {
     return undefined;
   }
@@ -149,8 +162,11 @@ const toLinkIfNeeded = (key: PreviewContactItem["key"], value: string): string |
   }
 
   if (key === "website" || key === "linkedin" || key === "github") {
-    let prefix = key === 'website' || value.includes(`${key}.com`) ? '' : `${key}.com/`
-    return value.startsWith("http://") || value.startsWith("https://") ? value : `https://${prefix + value}`;
+    let prefix =
+      key === "website" || value.includes(`${key}.com`) ? "" : `${key}.com/`;
+    return value.startsWith("http://") || value.startsWith("https://")
+      ? value
+      : `https://${prefix + value}`;
   }
 
   return undefined;
@@ -166,50 +182,50 @@ const mapContacts = (document: CvDocument): PreviewContactItem[] => {
   return compact<PreviewContactItem>([
     source.location.trim()
       ? {
-        key: "location",
-        label: "Location",
-        value: source.location.trim(),
-      }
+          key: "location",
+          label: "Location",
+          value: source.location.trim(),
+        }
       : null,
     source.email.trim()
       ? {
-        key: "email",
-        label: "Email",
-        value: source.email.trim(),
-        href: toLinkIfNeeded("email", source.email.trim()),
-      }
+          key: "email",
+          label: "Email",
+          value: source.email.trim(),
+          href: toLinkIfNeeded("email", source.email.trim()),
+        }
       : null,
     source.phone.trim()
       ? {
-        key: "phone",
-        label: "Phone",
-        value: source.phone.trim(),
-        href: toLinkIfNeeded("phone", source.phone.trim()),
-      }
+          key: "phone",
+          label: "Phone",
+          value: source.phone.trim(),
+          href: toLinkIfNeeded("phone", source.phone.trim()),
+        }
       : null,
     source.website.trim()
       ? {
-        key: "website",
-        label: "Website",
-        value: source.website.trim(),
-        href: toLinkIfNeeded("website", source.website.trim()),
-      }
+          key: "website",
+          label: "Website",
+          value: source.website.trim(),
+          href: toLinkIfNeeded("website", source.website.trim()),
+        }
       : null,
     source.github.trim()
       ? {
-        key: "github",
-        label: "GitHub",
-        value: source.github.trim(),
-        href: toLinkIfNeeded("github", source.github.trim()),
-      }
+          key: "github",
+          label: "GitHub",
+          value: source.github.trim(),
+          href: toLinkIfNeeded("github", source.github.trim()),
+        }
       : null,
     source.linkedin.trim()
       ? {
-        key: "linkedin",
-        label: "LinkedIn",
-        value: source.linkedin.trim(),
-        href: toLinkIfNeeded("linkedin", source.linkedin.trim()),
-      }
+          key: "linkedin",
+          label: "LinkedIn",
+          value: source.linkedin.trim(),
+          href: toLinkIfNeeded("linkedin", source.linkedin.trim()),
+        }
       : null,
   ]);
 };
@@ -220,7 +236,11 @@ export const mapCvToPreview = (document: CvDocument): CvPreviewViewModel => {
     company: item.company.trim(),
     role: item.role.trim(),
     location: item.location.trim(),
-    periodLabel: buildPeriodLabel(item.dateRange.startDate, item.dateRange.endDate, item.dateRange.isPresent),
+    periodLabel: buildPeriodLabel(
+      item.dateRange.startDate,
+      item.dateRange.endDate,
+      item.dateRange.isPresent,
+    ),
     summary: item.summary.trim(),
     highlights: item.highlights.map((entry) => entry.trim()).filter(Boolean),
   }));
@@ -232,7 +252,10 @@ export const mapCvToPreview = (document: CvDocument): CvPreviewViewModel => {
     fieldOfStudy: item.fieldOfStudy.trim(),
     gpa: item.gpa?.trim(),
     location: item.location.trim(),
-    periodLabel: buildEducationPeriodLabel(item.dateRange.startDate, item.dateRange.endDate),
+    periodLabel: buildEducationPeriodLabel(
+      item.dateRange.startDate,
+      item.dateRange.endDate,
+    ),
     description: item.description.trim(),
   }));
 
@@ -241,10 +264,16 @@ export const mapCvToPreview = (document: CvDocument): CvPreviewViewModel => {
     name: item.name.trim(),
     role: item.role.trim(),
     url: item.url.trim(),
-    periodLabel: buildPeriodLabel(item.dateRange.startDate, item.dateRange.endDate, item.dateRange.isPresent),
+    periodLabel: buildPeriodLabel(
+      item.dateRange.startDate,
+      item.dateRange.endDate,
+      item.dateRange.isPresent,
+    ),
     description: item.description.trim(),
     highlights: item.highlights.map((entry) => entry.trim()).filter(Boolean),
-    technologies: item.technologies.map((entry) => entry.trim()).filter(Boolean),
+    technologies: item.technologies
+      .map((entry) => entry.trim())
+      .filter(Boolean),
   }));
 
   const mappedSkills = document.skills.map((item) => ({

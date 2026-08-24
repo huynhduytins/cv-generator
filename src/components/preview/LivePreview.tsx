@@ -28,12 +28,12 @@ const extractFilename = (contentDisposition: string | null): string => {
 
 const serializeDocumentStyles = (): string => {
   const styleNodes = Array.from(
-    document.querySelectorAll<HTMLStyleElement | HTMLLinkElement>('style, link[rel="stylesheet"]'),
+    document.querySelectorAll<HTMLStyleElement | HTMLLinkElement>(
+      'style, link[rel="stylesheet"]',
+    ),
   );
 
-  return styleNodes
-    .map((node) => node.outerHTML)
-    .join("\n");
+  return styleNodes.map((node) => node.outerHTML).join("\n");
 };
 
 const waitForTransitionFrame = async (delayMs: number): Promise<void> => {
@@ -46,8 +46,14 @@ const waitForTransitionFrame = async (delayMs: number): Promise<void> => {
 
 const createInlineStyledSnapshot = (rootElement: HTMLElement): string => {
   const clonedRoot = rootElement.cloneNode(true) as HTMLElement;
-  const sourceElements = [rootElement, ...Array.from(rootElement.querySelectorAll<HTMLElement>("*"))];
-  const clonedElements = [clonedRoot, ...Array.from(clonedRoot.querySelectorAll<HTMLElement>("*"))];
+  const sourceElements = [
+    rootElement,
+    ...Array.from(rootElement.querySelectorAll<HTMLElement>("*")),
+  ];
+  const clonedElements = [
+    clonedRoot,
+    ...Array.from(clonedRoot.querySelectorAll<HTMLElement>("*")),
+  ];
 
   sourceElements.forEach((sourceElement, index) => {
     const clonedElement = clonedElements[index];
@@ -56,9 +62,12 @@ const createInlineStyledSnapshot = (rootElement: HTMLElement): string => {
     }
 
     const computedStyle = window.getComputedStyle(sourceElement);
-    const cssText = Array.from(computedStyle).reduce((accumulator, propertyName) => {
-      return `${accumulator}${propertyName}:${computedStyle.getPropertyValue(propertyName)};`;
-    }, "");
+    const cssText = Array.from(computedStyle).reduce(
+      (accumulator, propertyName) => {
+        return `${accumulator}${propertyName}:${computedStyle.getPropertyValue(propertyName)};`;
+      },
+      "",
+    );
 
     clonedElement.setAttribute("style", cssText);
   });
@@ -73,12 +82,16 @@ const LivePreview = () => {
   const previewModel = useCvStore(selectPreviewViewModel);
   const activeStep = useCvStore((state) => state.activeStep);
   const contactDisplayMode = useCvStore((state) => state.contactDisplayMode);
-  const setContactDisplayMode = useCvStore((state) => state.setContactDisplayMode);
+  const setContactDisplayMode = useCvStore(
+    (state) => state.setContactDisplayMode,
+  );
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const exportRootRef = useRef<HTMLDivElement | null>(null);
   const [isPdfBusy, setIsPdfBusy] = useState(false);
   const [pdfError, setPdfError] = useState<string | null>(null);
-  const [pdfPreview, setPdfPreview] = useState<GeneratedPdfPreview | null>(null);
+  const [pdfPreview, setPdfPreview] = useState<GeneratedPdfPreview | null>(
+    null,
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -181,7 +194,9 @@ const LivePreview = () => {
 
       const pdfBlob = await response.blob();
       const blobUrl = window.URL.createObjectURL(pdfBlob);
-      const filename = extractFilename(response.headers.get("content-disposition"));
+      const filename = extractFilename(
+        response.headers.get("content-disposition"),
+      );
 
       setPdfPreview({ blobUrl, filename });
       setIsModalOpen(true);
@@ -217,7 +232,11 @@ const LivePreview = () => {
         <div className={styles.toolbar}>
           <p className={styles.meta}>Live Preview (Minimalist)</p>
           <div className={styles.toolbarActions}>
-            <div className={styles.switchGroup} role="group" aria-label="Contact display mode">
+            <div
+              className={styles.switchGroup}
+              role="group"
+              aria-label="Contact display mode"
+            >
               <button
                 type="button"
                 className={styles.switchButton}

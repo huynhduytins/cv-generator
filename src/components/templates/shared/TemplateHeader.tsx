@@ -1,7 +1,14 @@
 import type { PreviewContactItem } from "@/lib/mappers/cv-to-preview";
 import type { ContactDisplayMode } from "@/store/slices/uiSlice";
 import type { IconType } from "react-icons";
-import { FiAtSign, FiGithub, FiGlobe, FiLinkedin, FiMapPin, FiPhone } from "react-icons/fi";
+import {
+  FiAtSign,
+  FiGithub,
+  FiGlobe,
+  FiLinkedin,
+  FiMapPin,
+  FiPhone,
+} from "react-icons/fi";
 
 import styles from "./TemplatePrimitives.module.css";
 
@@ -54,13 +61,21 @@ const TemplateHeader = ({
                 ) : (
                   <span className={styles.contactLabel}>{contact.label}:</span>
                 )}
-                <span className={`${contact.href && styles.href}`}>{contact.value}</span>
+                <span className={`${contact.href && styles.href}`}>
+                  {contact.value}
+                </span>
               </>
             );
 
             if (contact.href) {
               return (
-                <a key={contact.key} className={chipClassName} href={contact.href} target="_blank" rel="noreferrer">
+                <a
+                  key={contact.key}
+                  className={chipClassName}
+                  href={contact.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {body}
                 </a>
               );

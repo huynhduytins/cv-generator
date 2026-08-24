@@ -29,7 +29,8 @@ const TextArea = ({
 }: TextAreaProps) => {
   const inputId = useId();
   const [localValue, setLocalValue] = useState(value);
-  const onDebouncedChangeRef = useRef<typeof onDebouncedChange>(onDebouncedChange);
+  const onDebouncedChangeRef =
+    useRef<typeof onDebouncedChange>(onDebouncedChange);
 
   useEffect(() => {
     onDebouncedChangeRef.current = onDebouncedChange;

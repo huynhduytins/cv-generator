@@ -1,7 +1,10 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { createDocumentSlice, type DocumentSlice } from "./slices/documentSlice";
+import {
+  createDocumentSlice,
+  type DocumentSlice,
+} from "./slices/documentSlice";
 import { createMetaSlice, type MetaSlice } from "./slices/metaSlice";
 import { createUiSlice, type UiSlice } from "./slices/uiSlice";
 import { migratePersistedCvState } from "./migrations";

@@ -17,7 +17,13 @@ interface ProjectsSectionProps {
 
 const noop = () => undefined;
 
-const ProjectsSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: ProjectsSectionProps) => {
+const ProjectsSection = ({
+  items,
+  onAdd,
+  onUpdate,
+  onRemove,
+  onReorder,
+}: ProjectsSectionProps) => {
   return (
     <section className={styles.sectionRoot}>
       <header className={styles.sectionHeader}>
@@ -34,26 +40,35 @@ const ProjectsSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: Projec
               label="Project Name"
               value={item.name}
               onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { name: nextValue })}
+              onDebouncedChange={(nextValue) =>
+                onUpdate(item.id, { name: nextValue })
+              }
             />
             <TextField
               label="Role"
               value={item.role}
               onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { role: nextValue })}
+              onDebouncedChange={(nextValue) =>
+                onUpdate(item.id, { role: nextValue })
+              }
             />
             <TextField
               label="URL"
               value={item.url}
               onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { url: nextValue })}
+              onDebouncedChange={(nextValue) =>
+                onUpdate(item.id, { url: nextValue })
+              }
             />
             <DateField
               label="Start Date"
               value={item.dateRange.startDate}
               onChange={(nextValue) =>
                 onUpdate(item.id, {
-                  dateRange: { ...item.dateRange, startDate: nextValue as ISODate },
+                  dateRange: {
+                    ...item.dateRange,
+                    startDate: nextValue as ISODate,
+                  },
                 })
               }
             />
@@ -62,7 +77,9 @@ const ProjectsSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: Projec
             label="Description"
             value={item.description}
             onChange={noop}
-            onDebouncedChange={(nextValue) => onUpdate(item.id, { description: nextValue })}
+            onDebouncedChange={(nextValue) =>
+              onUpdate(item.id, { description: nextValue })
+            }
           />
           <ArraySectionControls
             canMoveUp={index > 0}

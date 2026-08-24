@@ -8,7 +8,11 @@ interface CvBuilderShellProps {
   preview: ReactNode;
 }
 
-const CvBuilderShell = ({ navigation, editor, preview }: CvBuilderShellProps) => {
+const CvBuilderShell = ({
+  navigation,
+  editor,
+  preview,
+}: CvBuilderShellProps) => {
   return (
     <main className={styles.page}>
       <div className={styles.container}>
@@ -18,7 +22,10 @@ const CvBuilderShell = ({ navigation, editor, preview }: CvBuilderShellProps) =>
             {editor}
           </section>
 
-          <aside aria-label="Live preview placeholder" className={`${styles.card} ${styles.preview}`}>
+          <aside
+            aria-label="Live preview placeholder"
+            className={`${styles.card} ${styles.preview}`}
+          >
             {preview}
           </aside>
         </div>

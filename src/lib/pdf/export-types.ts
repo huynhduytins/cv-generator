@@ -1,6 +1,4 @@
-import type {
-  CvPreviewViewModel,
-} from "@/lib/mappers/cv-to-preview";
+import type { CvPreviewViewModel } from "@/lib/mappers/cv-to-preview";
 
 export interface ExportPdfRequestPayload {
   viewModel: CvPreviewViewModel;
@@ -39,7 +37,9 @@ const isPreviewViewModel = (value: unknown): value is CvPreviewViewModel => {
   );
 };
 
-export const parseExportPdfRequestPayload = (value: unknown): ExportPdfRequestPayload => {
+export const parseExportPdfRequestPayload = (
+  value: unknown,
+): ExportPdfRequestPayload => {
   if (!isRecord(value)) {
     throw new Error("Invalid payload: expected object.");
   }
@@ -64,7 +64,10 @@ export const parseExportPdfRequestPayload = (value: unknown): ExportPdfRequestPa
     throw new Error("Invalid payload: style snapshot is too large.");
   }
 
-  if (typeof value.containerWidthPx !== "number" || Number.isNaN(value.containerWidthPx)) {
+  if (
+    typeof value.containerWidthPx !== "number" ||
+    Number.isNaN(value.containerWidthPx)
+  ) {
     throw new Error("Invalid payload: container width is missing.");
   }
 

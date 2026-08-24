@@ -15,7 +15,13 @@ interface SkillsSectionProps {
 
 const noop = () => undefined;
 
-const SkillsSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: SkillsSectionProps) => {
+const SkillsSection = ({
+  items,
+  onAdd,
+  onUpdate,
+  onRemove,
+  onReorder,
+}: SkillsSectionProps) => {
   return (
     <section className={styles.sectionRoot}>
       <header className={styles.sectionHeader}>
@@ -32,14 +38,18 @@ const SkillsSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: SkillsSe
               label="Category"
               value={item.category}
               onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { category: nextValue })}
+              onDebouncedChange={(nextValue) =>
+                onUpdate(item.id, { category: nextValue })
+              }
             />
             <div className={styles.fieldFullWidth}>
               <TextArea
                 label="Name"
                 value={item.name}
                 onChange={noop}
-                onDebouncedChange={(nextValue) => onUpdate(item.id, { name: nextValue })}
+                onDebouncedChange={(nextValue) =>
+                  onUpdate(item.id, { name: nextValue })
+                }
                 placeholder="TypeScript, JavaScript, Python"
                 helperText="Separate skills by comma or new line"
               />

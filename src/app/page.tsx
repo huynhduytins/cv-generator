@@ -19,10 +19,12 @@ const CvBuilderClient = () => {
   const controller = useCvFormController();
   const validation = validateCvDocument(controller.document);
 
-  const navigationItems: SectionNavigationItem[] = controller.sectionItems.map((item) => ({
-    ...item,
-    validationState: validation.sectionStates[item.key],
-  }));
+  const navigationItems: SectionNavigationItem[] = controller.sectionItems.map(
+    (item) => ({
+      ...item,
+      validationState: validation.sectionStates[item.key],
+    }),
+  );
 
   const renderSectionContent = (section: CvSectionStep) => {
     switch (section) {
@@ -95,9 +97,7 @@ const CvBuilderClient = () => {
           renderSectionContent={renderSectionContent}
         />
       }
-      preview={
-        <LivePreview />
-      }
+      preview={<LivePreview />}
     />
   );
 };

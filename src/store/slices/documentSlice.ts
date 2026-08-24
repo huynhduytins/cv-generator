@@ -57,7 +57,10 @@ export interface DocumentSlice {
   document: CvDocument;
   setPersonalInfo: (personalInfo: DeepPartial<PersonalInfo>) => void;
   resetDocument: () => void;
-  addSectionItem: <K extends ArraySectionKey>(section: K, item: SectionItem<K>) => void;
+  addSectionItem: <K extends ArraySectionKey>(
+    section: K,
+    item: SectionItem<K>,
+  ) => void;
   updateSectionItem: <K extends ArraySectionKey>(
     section: K,
     id: Id,
@@ -97,11 +100,10 @@ export const createDocumentSlice: StateCreator<
   addSectionItem: (section, item) => {
     set((state) => ({
       document: updateDocumentTimestamp({
-        ...replaceArraySection(
-          state.document,
-          section,
-          [...state.document[section], item] as CvDocument[typeof section],
-        ),
+        ...replaceArraySection(state.document, section, [
+          ...state.document[section],
+          item,
+        ] as CvDocument[typeof section]),
       }),
     }));
     get().markDirty();
@@ -131,7 +133,9 @@ export const createDocumentSlice: StateCreator<
         ...replaceArraySection(
           state.document,
           section,
-          state.document[section].filter((item) => item.id !== id) as CvDocument[typeof section],
+          state.document[section].filter(
+            (item) => item.id !== id,
+          ) as CvDocument[typeof section],
         ),
       }),
     }));

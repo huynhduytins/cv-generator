@@ -47,15 +47,19 @@ const TimelineEntry = ({
                 rel="noreferrer"
                 aria-label={`Open ${title} link`}
               >
-                <FiExternalLink className={styles.timelineTitleIcon} aria-hidden />
+                <FiExternalLink
+                  className={styles.timelineTitleIcon}
+                  aria-hidden
+                />
               </a>
             ) : null}
             {subtitle ? `, ${subtitle}` : ""}
           </h3>
           {metaSecondary ? (
             <p
-              className={`${styles.timelineMetaSecondary} ${metaSecondaryItalic ? styles.timelineMetaSecondaryItalic : ""
-                }`.trim()}
+              className={`${styles.timelineMetaSecondary} ${
+                metaSecondaryItalic ? styles.timelineMetaSecondaryItalic : ""
+              }`.trim()}
             >
               {metaSecondary}
             </p>
@@ -64,20 +68,30 @@ const TimelineEntry = ({
         {meta || metaSecondary ? (
           <div className={styles.timelineMetaGroup}>
             {meta ? <p className={styles.timelineMeta}>{meta}</p> : null}
-            {gpa ? <p className={`${styles.timelineMetaSecondary} ${metaSecondaryItalic ? styles.timelineMetaSecondaryItalic : ""
-              }`.trim()}>{gpa}</p> : null}
+            {gpa ? (
+              <p
+                className={`${styles.timelineMetaSecondary} ${
+                  metaSecondaryItalic ? styles.timelineMetaSecondaryItalic : ""
+                }`.trim()}
+              >
+                {gpa}
+              </p>
+            ) : null}
           </div>
         ) : null}
       </div>
       {secondaryLine ? (
         <p
-          className={`${styles.timelineSecondary} ${secondaryLineItalic ? styles.timelineSecondaryItalic : ""
-            }`.trim()}
+          className={`${styles.timelineSecondary} ${
+            secondaryLineItalic ? styles.timelineSecondaryItalic : ""
+          }`.trim()}
         >
           {secondaryLine}
         </p>
       ) : null}
-      {body ? <RichTextBlock text={body} className={styles.timelineBody} /> : null}
+      {body ? (
+        <RichTextBlock text={body} className={styles.timelineBody} />
+      ) : null}
       {bullets && bullets.length > 0 ? (
         <ul className={styles.list}>
           {bullets.map((item, index) => (

@@ -7,15 +7,20 @@ export interface CvValidationResult {
   sectionStates: Record<CvSectionStep, "idle" | "valid" | "invalid">;
 }
 
-const validatePersonalInfo = (value: PersonalInfo): FieldErrors<PersonalInfo> => {
+const validatePersonalInfo = (
+  value: PersonalInfo,
+): FieldErrors<PersonalInfo> => {
   void value;
   return {};
 };
 
-const hasErrors = <T extends Record<string, string | undefined>>(errors: T): boolean =>
-  Object.values(errors).some((value) => Boolean(value));
+const hasErrors = <T extends Record<string, string | undefined>>(
+  errors: T,
+): boolean => Object.values(errors).some((value) => Boolean(value));
 
-export const validateCvDocument = (document: CvDocument): CvValidationResult => {
+export const validateCvDocument = (
+  document: CvDocument,
+): CvValidationResult => {
   const personalInfoErrors = validatePersonalInfo(document.personalInfo);
 
   return {

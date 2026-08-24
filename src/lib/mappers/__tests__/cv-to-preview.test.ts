@@ -1,5 +1,9 @@
 import { mapCvToPreview } from "@/lib/mappers/cv-to-preview";
-import { createEmptyCvDocument, createEmptyProject, createEmptyWorkExperience } from "@/types/cv";
+import {
+  createEmptyCvDocument,
+  createEmptyProject,
+  createEmptyWorkExperience,
+} from "@/types/cv";
 import type { Id, ISODate } from "@/types/common";
 
 describe("mapCvToPreview", () => {

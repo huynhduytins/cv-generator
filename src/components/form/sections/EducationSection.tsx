@@ -17,7 +17,13 @@ interface EducationSectionProps {
 
 const noop = () => undefined;
 
-const EducationSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: EducationSectionProps) => {
+const EducationSection = ({
+  items,
+  onAdd,
+  onUpdate,
+  onRemove,
+  onReorder,
+}: EducationSectionProps) => {
   return (
     <section className={styles.sectionRoot}>
       <header className={styles.sectionHeader}>
@@ -34,25 +40,33 @@ const EducationSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: Educa
               label="Institution"
               value={item.institution}
               onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { institution: nextValue })}
+              onDebouncedChange={(nextValue) =>
+                onUpdate(item.id, { institution: nextValue })
+              }
             />
             <TextField
               label="Degree"
               value={item.degree}
               onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { degree: nextValue })}
+              onDebouncedChange={(nextValue) =>
+                onUpdate(item.id, { degree: nextValue })
+              }
             />
             <TextField
               label="Field of Study"
               value={item.fieldOfStudy}
               onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { fieldOfStudy: nextValue })}
+              onDebouncedChange={(nextValue) =>
+                onUpdate(item.id, { fieldOfStudy: nextValue })
+              }
             />
             <TextField
               label="GPA"
               value={item.gpa}
               onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { gpa: nextValue })}
+              onDebouncedChange={(nextValue) =>
+                onUpdate(item.id, { gpa: nextValue })
+              }
               placeholder="e.g. 3.8/4.0"
             />
             <DateField
@@ -86,7 +100,9 @@ const EducationSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: Educa
             label="Description"
             value={item.description}
             onChange={noop}
-            onDebouncedChange={(nextValue) => onUpdate(item.id, { description: nextValue })}
+            onDebouncedChange={(nextValue) =>
+              onUpdate(item.id, { description: nextValue })
+            }
           />
           <ArraySectionControls
             canMoveUp={index > 0}

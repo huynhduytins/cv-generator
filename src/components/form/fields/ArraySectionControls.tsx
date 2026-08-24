@@ -23,7 +23,12 @@ const ArraySectionControls = ({
 }: ArraySectionControlsProps) => {
   return (
     <div className={styles.arrayControls}>
-      <button type="button" className={styles.arrayButton} onClick={onMoveUp} disabled={!canMoveUp}>
+      <button
+        type="button"
+        className={styles.arrayButton}
+        onClick={onMoveUp}
+        disabled={!canMoveUp}
+      >
         {moveUpLabel}
       </button>
       <button

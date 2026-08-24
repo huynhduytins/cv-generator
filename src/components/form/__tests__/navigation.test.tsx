@@ -25,7 +25,13 @@ describe("form navigation", () => {
     const user = userEvent.setup();
     const onChangeStep = vi.fn();
 
-    render(<StepNavigator items={sectionItems} activeStep="personalInfo" onChangeStep={onChangeStep} />);
+    render(
+      <StepNavigator
+        items={sectionItems}
+        activeStep="personalInfo"
+        onChangeStep={onChangeStep}
+      />,
+    );
 
     await user.click(screen.getByRole("button", { name: /work experience/i }));
 
@@ -44,8 +50,12 @@ describe("form navigation", () => {
       />,
     );
 
-    await user.click(screen.getAllByRole("button", { name: /personal info/i })[0]);
-    await user.click(screen.getAllByRole("button", { name: /work experience/i })[0]);
+    await user.click(
+      screen.getAllByRole("button", { name: /personal info/i })[0],
+    );
+    await user.click(
+      screen.getAllByRole("button", { name: /work experience/i })[0],
+    );
 
     expect(onToggleSection).toHaveBeenCalledWith("personalInfo");
     expect(onToggleSection).toHaveBeenCalledWith("workExperience");
