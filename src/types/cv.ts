@@ -1,6 +1,4 @@
-import type { DateRange, Id, ISODate, Nullable } from "./common";
-
-export type SkillLevel = "beginner" | "intermediate" | "advanced" | "expert";
+import type { DateRange, Id, ISODate } from "./common";
 
 export interface PersonalInfo {
   fullName: string;
@@ -38,9 +36,7 @@ export interface Education {
 export interface Skill {
   id: Id;
   name: string;
-  level: SkillLevel;
   category: string;
-  yearsOfExperience: Nullable<number>;
 }
 
 export interface Project {
@@ -48,7 +44,6 @@ export interface Project {
   name: string;
   role: string;
   url: string;
-  repositoryUrl: string;
   dateRange: DateRange;
   description: string;
   highlights: string[];
@@ -87,7 +82,7 @@ export const CV_SECTION_LABELS: Record<CvSectionStep, string> = {
   projects: "Projects",
 };
 
-export const CV_SCHEMA_VERSION = 1;
+export const CV_SCHEMA_VERSION = 2;
 
 export const EMPTY_PERSONAL_INFO: PersonalInfo = {
   fullName: "",
@@ -140,9 +135,7 @@ export const createEmptyEducation = (id: Id): Education => ({
 export const createEmptySkill = (id: Id): Skill => ({
   id,
   name: "",
-  level: "intermediate",
   category: "",
-  yearsOfExperience: null,
 });
 
 export const createEmptyProject = (id: Id): Project => ({
@@ -150,7 +143,6 @@ export const createEmptyProject = (id: Id): Project => ({
   name: "",
   role: "",
   url: "",
-  repositoryUrl: "",
   dateRange: createEmptyDateRange(),
   description: "",
   highlights: [],

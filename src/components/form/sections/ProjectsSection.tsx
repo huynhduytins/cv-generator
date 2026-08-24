@@ -48,12 +48,6 @@ const ProjectsSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: Projec
               onChange={noop}
               onDebouncedChange={(nextValue) => onUpdate(item.id, { url: nextValue })}
             />
-            <TextField
-              label="Repository URL"
-              value={item.repositoryUrl}
-              onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { repositoryUrl: nextValue })}
-            />
             <DateField
               label="Start Date"
               value={item.dateRange.startDate}

@@ -91,12 +91,7 @@ const CvBuilderClient = () => {
       editor={
         <AccordionNavigator
           items={navigationItems}
-          activeStep={controller.activeStep}
           onToggleSection={controller.toggleSectionExpanded}
-          onJumpToSection={(section) => {
-            controller.setActiveStep(section);
-            controller.setSectionExpanded(section, true);
-          }}
           renderSectionContent={renderSectionContent}
         />
       }

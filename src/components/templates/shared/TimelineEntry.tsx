@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { FiExternalLink } from "react-icons/fi";
 
 import styles from "./TemplatePrimitives.module.css";
 import RichTextBlock from "./RichTextBlock";
@@ -6,6 +7,7 @@ import RichTextBlock from "./RichTextBlock";
 interface TimelineEntryProps {
   title: string;
   subtitle?: string;
+  titleHref?: string;
   secondaryLine?: string;
   secondaryLineItalic?: boolean;
   meta?: string;
@@ -20,6 +22,7 @@ interface TimelineEntryProps {
 const TimelineEntry = ({
   title,
   subtitle,
+  titleHref,
   secondaryLine,
   secondaryLineItalic = false,
   meta,
@@ -35,7 +38,18 @@ const TimelineEntry = ({
       <div className={styles.timelineHeader}>
         <div>
           <h3 className={styles.timelineTitle}>
-            {title}
+            <span>{title}</span>
+            {titleHref ? (
+              <a
+                className={styles.timelineTitleIconLink}
+                href={titleHref}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Open ${title} link`}
+              >
+                <FiExternalLink className={styles.timelineTitleIcon} aria-hidden />
+              </a>
+            ) : null}
             {subtitle ? `, ${subtitle}` : ""}
           </h3>
           {metaSecondary ? (

@@ -1,6 +1,7 @@
 import ArraySectionControls from "@/components/form/fields/ArraySectionControls";
+import TextArea from "@/components/form/fields/TextArea";
 import TextField from "@/components/form/fields/TextField";
-import type { Skill, SkillLevel } from "@/types/cv";
+import type { Skill } from "@/types/cv";
 
 import styles from "./SectionBlocks.module.css";
 
@@ -13,8 +14,6 @@ interface SkillsSectionProps {
 }
 
 const noop = () => undefined;
-
-const SKILL_LEVELS: SkillLevel[] = ["beginner", "intermediate", "advanced", "expert"];
 
 const SkillsSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: SkillsSectionProps) => {
   return (
@@ -30,43 +29,21 @@ const SkillsSection = ({ items, onAdd, onUpdate, onRemove, onReorder }: SkillsSe
           <h3 className={styles.itemTitle}>Skill {index + 1}</h3>
           <div className={styles.fieldGrid}>
             <TextField
-              label="Name"
-              value={item.name}
-              onChange={noop}
-              onDebouncedChange={(nextValue) => onUpdate(item.id, { name: nextValue })}
-            />
-            <TextField
               label="Category"
               value={item.category}
               onChange={noop}
               onDebouncedChange={(nextValue) => onUpdate(item.id, { category: nextValue })}
             />
-            <label>
-              <span className={styles.sectionDescription}>Level</span>
-              <select
-                className={styles.select}
-                value={item.level}
-                onChange={(event) => onUpdate(item.id, { level: event.target.value as SkillLevel })}
-              >
-                {SKILL_LEVELS.map((level) => (
-                  <option key={level} value={level}>
-                    {level}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <TextField
-              label="Years of Experience"
-              value={item.yearsOfExperience === null ? "" : String(item.yearsOfExperience)}
-              onChange={noop}
-              onDebouncedChange={(nextValue) => {
-                const years = Number(nextValue);
-                onUpdate(item.id, {
-                  yearsOfExperience: Number.isNaN(years) ? null : years,
-                });
-              }}
-              helperText="Optional numeric value"
-            />
+            <div className={styles.fieldFullWidth}>
+              <TextArea
+                label="Name"
+                value={item.name}
+                onChange={noop}
+                onDebouncedChange={(nextValue) => onUpdate(item.id, { name: nextValue })}
+                placeholder="TypeScript, JavaScript, Python"
+                helperText="Separate skills by comma or new line"
+              />
+            </div>
           </div>
           <ArraySectionControls
             canMoveUp={index > 0}

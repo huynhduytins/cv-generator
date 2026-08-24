@@ -47,6 +47,10 @@
   gap: 0.7rem;
 }
 
+.fieldFullWidth {
+  width: 100%;
+}
+
 .checkboxRow {
   display: inline-flex;
   align-items: center;
@@ -69,5 +73,9 @@
 @media (min-width: 768px) {
   .fieldGrid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .fieldFullWidth {
+    grid-column: 1 / -1;
   }
 }

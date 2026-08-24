@@ -7,9 +7,7 @@ import styles from "./FormNavigation.module.css";
 
 interface AccordionNavigatorProps {
   items: SectionNavigationItem[];
-  activeStep: CvSectionStep;
   onToggleSection: (section: CvSectionStep) => void;
-  onJumpToSection: (section: CvSectionStep) => void;
   renderSectionContent: (section: CvSectionStep) => ReactNode;
 }
 
@@ -25,9 +23,7 @@ const handleHeaderKeyDown = (
 
 const AccordionNavigator = ({
   items,
-  activeStep,
   onToggleSection,
-  onJumpToSection,
   renderSectionContent,
 }: AccordionNavigatorProps) => {
   return (

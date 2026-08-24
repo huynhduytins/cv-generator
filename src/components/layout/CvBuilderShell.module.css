@@ -33,6 +33,10 @@
 
 .preview {
   min-height: 24rem;
+  max-height: calc(100vh - 2rem);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: 1024px) {

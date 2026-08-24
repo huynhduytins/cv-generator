@@ -32,25 +32,22 @@ describe("form navigation", () => {
     expect(onChangeStep).toHaveBeenCalledWith("workExperience");
   });
 
-  it("calls accordion callbacks on toggle and jump", async () => {
+  it("calls accordion toggle callback for section headers", async () => {
     const user = userEvent.setup();
     const onToggleSection = vi.fn();
-    const onJumpToSection = vi.fn();
 
     render(
       <AccordionNavigator
         items={sectionItems}
-        activeStep="personalInfo"
         onToggleSection={onToggleSection}
-        onJumpToSection={onJumpToSection}
         renderSectionContent={(section) => <div>{section}</div>}
       />,
     );
 
     await user.click(screen.getAllByRole("button", { name: /personal info/i })[0]);
-    await user.click(screen.getByRole("button", { name: /jump to work experience/i }));
+    await user.click(screen.getAllByRole("button", { name: /work experience/i })[0]);
 
     expect(onToggleSection).toHaveBeenCalledWith("personalInfo");
-    expect(onJumpToSection).toHaveBeenCalledWith("workExperience");
+    expect(onToggleSection).toHaveBeenCalledWith("workExperience");
   });
 });

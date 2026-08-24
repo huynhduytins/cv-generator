@@ -31,9 +31,7 @@ export interface PreviewEducationItem {
 export interface PreviewSkillItem {
   id: Skill["id"];
   name: string;
-  level: Skill["level"];
   category: string;
-  yearsOfExperience: Skill["yearsOfExperience"];
 }
 
 export interface PreviewProjectItem {
@@ -41,7 +39,6 @@ export interface PreviewProjectItem {
   name: string;
   role: string;
   url: string;
-  repositoryUrl: string;
   periodLabel: string;
   description: string;
   highlights: string[];
@@ -244,7 +241,6 @@ export const mapCvToPreview = (document: CvDocument): CvPreviewViewModel => {
     name: item.name.trim(),
     role: item.role.trim(),
     url: item.url.trim(),
-    repositoryUrl: item.repositoryUrl.trim(),
     periodLabel: buildPeriodLabel(item.dateRange.startDate, item.dateRange.endDate, item.dateRange.isPresent),
     description: item.description.trim(),
     highlights: item.highlights.map((entry) => entry.trim()).filter(Boolean),
@@ -254,9 +250,7 @@ export const mapCvToPreview = (document: CvDocument): CvPreviewViewModel => {
   const mappedSkills = document.skills.map((item) => ({
     id: item.id,
     name: item.name.trim(),
-    level: item.level,
     category: item.category.trim(),
-    yearsOfExperience: item.yearsOfExperience,
   }));
 
   const visibleSections: CvSectionStep[] = compact<CvSectionStep>([

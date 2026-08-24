@@ -120,6 +120,21 @@
 .timelineTitle {
   margin: 0;
   font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.28rem;
+}
+
+.timelineTitleIconLink {
+  color: #2563eb;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.timelineTitleIcon {
+  width: 0.9rem;
+  height: 0.9rem;
 }
 
 .timelineMeta {
@@ -202,4 +217,23 @@
 
 .href {
   color: #2563eb;
+}
+
+.skillsLayout {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.skillsLine {
+  margin: 0;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.skillsCategory {
+  font-weight: 700;
+}
+
+.skillsValues {
+  font-weight: 400;
 }
