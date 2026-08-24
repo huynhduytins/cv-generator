@@ -13,6 +13,12 @@
   gap: 0.5rem;
 }
 
+.toolbarActions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .meta {
   margin: 0;
   color: #64748b;
@@ -42,6 +48,27 @@
 .switchButton[data-active="true"] {
   background: #0f172a;
   color: #ffffff;
+}
+
+.generatePdfButton {
+  border: 1px solid #0f172a;
+  background: #0f172a;
+  color: #ffffff;
+  border-radius: 0.45rem;
+  padding: 0.3rem 0.62rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.generatePdfButton:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.errorText {
+  margin: 0;
+  color: #b91c1c;
+  font-size: 0.78rem;
 }
 
 .previewViewport {

@@ -1,3 +1,4 @@
+import { forwardRef } from "react";
 import type { CvPreviewViewModel } from "@/lib/mappers/cv-to-preview";
 import type { ContactDisplayMode } from "@/store/slices/uiSlice";
 
@@ -73,12 +74,18 @@ const groupSkillsByCategory = (
   }));
 };
 
-const MinimalistTemplate = ({ viewModel, contactDisplayMode }: MinimalistTemplateProps) => {
-  const { identity } = viewModel;
-  const groupedSkills = groupSkillsByCategory(viewModel.skills);
+const MinimalistTemplate = forwardRef<HTMLElement, MinimalistTemplateProps>(
+  ({ viewModel, contactDisplayMode }, ref) => {
+    const { identity } = viewModel;
+    const groupedSkills = groupSkillsByCategory(viewModel.skills);
 
-  return (
-    <article className={styles.sheet} data-template="minimalist">
+    return (
+      <article
+        ref={ref}
+        className={styles.sheet}
+        data-template="minimalist"
+        data-export-preview-root
+      >
       <TemplateHeader
         fullName={identity.fullName}
         headline={identity.headline}
@@ -159,8 +166,11 @@ const MinimalistTemplate = ({ viewModel, contactDisplayMode }: MinimalistTemplat
           ))}
         </SectionBlock>
       ) : null}
-    </article>
-  );
-};
+      </article>
+    );
+  },
+);
+
+MinimalistTemplate.displayName = "MinimalistTemplate";
 
 export default MinimalistTemplate;
