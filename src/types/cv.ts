@@ -84,7 +84,7 @@ export const CV_SECTION_LABELS: Record<CvSectionStep, string> = {
 
 export const CV_SCHEMA_VERSION = 2;
 
-export const EMPTY_PERSONAL_INFO: PersonalInfo = {
+const EMPTY_PERSONAL_INFO: PersonalInfo = {
   fullName: "",
   headline: "",
   email: "",
@@ -96,7 +96,7 @@ export const EMPTY_PERSONAL_INFO: PersonalInfo = {
   summary: "",
 };
 
-export const createEmptyDateRange = (): DateRange => ({
+const createEmptyDateRange = (): DateRange => ({
   startDate: "" as ISODate,
   endDate: null,
   isPresent: false,

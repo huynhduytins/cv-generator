@@ -1,4 +1,4 @@
-export type Brand<T, TBrand extends string> = T & {
+type Brand<T, TBrand extends string> = T & {
   readonly __brand: TBrand;
 };
 
@@ -12,8 +12,6 @@ export interface DateRange {
   endDate: Nullable<ISODate>;
   isPresent: boolean;
 }
-
-export type OptionalBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
 export type DeepPartial<T> = {
   [K in keyof T]?: T[K] extends object ? DeepPartial<T[K]> : T[K];

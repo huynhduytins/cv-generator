@@ -7,7 +7,7 @@ export interface PreviewContactItem {
   href?: string;
 }
 
-export interface PreviewWorkExperienceItem {
+interface PreviewWorkExperienceItem {
   id: WorkExperience["id"];
   company: string;
   role: string;
@@ -17,7 +17,7 @@ export interface PreviewWorkExperienceItem {
   highlights: string[];
 }
 
-export interface PreviewEducationItem {
+interface PreviewEducationItem {
   id: Education["id"];
   institution: string;
   degree: string;
@@ -28,13 +28,13 @@ export interface PreviewEducationItem {
   description: string;
 }
 
-export interface PreviewSkillItem {
+interface PreviewSkillItem {
   id: Skill["id"];
   name: string;
   category: string;
 }
 
-export interface PreviewProjectItem {
+interface PreviewProjectItem {
   id: Project["id"];
   name: string;
   role: string;

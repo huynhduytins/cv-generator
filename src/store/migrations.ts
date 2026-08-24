@@ -2,11 +2,6 @@ import { createEmptyCvDocument, CV_SCHEMA_VERSION } from "../types/cv";
 import type { CvDocument } from "../types/cv";
 import type { ISODate, Nullable, Id } from "../types/common";
 
-export interface PersistedMetaState {
-  lastSavedAt: Nullable<ISODate>;
-  schemaVersion: number;
-}
-
 export interface PersistedCvState {
   document: CvDocument;
   lastSavedAt: Nullable<ISODate>;
@@ -45,7 +40,7 @@ const sanitizeSkills = (skills: unknown): CvDocument["skills"] => {
   });
 };
 
-export const getInitialPersistedState = (): PersistedCvState => ({
+const getInitialPersistedState = (): PersistedCvState => ({
   document: createEmptyCvDocument(),
   lastSavedAt: null,
   schemaVersion: CV_SCHEMA_VERSION,

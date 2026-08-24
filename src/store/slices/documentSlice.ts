@@ -3,7 +3,6 @@ import type { StateCreator } from "zustand";
 import { createEmptyCvDocument } from "../../types/cv";
 import type {
   CvDocument,
-  CvSectionStep,
   Education,
   PersonalInfo,
   Project,
@@ -14,12 +13,10 @@ import type { DeepPartial, Id, ISODate } from "../../types/common";
 
 import type { CvStore } from "../cv-store";
 
-export type ArraySectionKey = "workExperience" | "education" | "skills" | "projects";
+type ArraySectionKey = "workExperience" | "education" | "skills" | "projects";
 
 type SectionItemMap = Pick<CvDocument, ArraySectionKey>;
 type SectionItem<K extends ArraySectionKey> = SectionItemMap[K][number];
-
-const arraySections: ArraySectionKey[] = ["workExperience", "education", "skills", "projects"];
 
 const updateDocumentTimestamp = (document: CvDocument): CvDocument => ({
   ...document,
@@ -55,9 +52,6 @@ const replaceArraySection = <K extends ArraySectionKey>(
   ...document,
   [section]: nextItems,
 });
-
-const isArraySectionKey = (value: CvSectionStep): value is ArraySectionKey =>
-  arraySections.includes(value as ArraySectionKey);
 
 export interface DocumentSlice {
   document: CvDocument;
@@ -161,7 +155,3 @@ export const createDocumentSlice: StateCreator<
     get().markDirty();
   },
 });
-
-export type CvArraySectionItem = WorkExperience | Education | Skill | Project;
-
-export { isArraySectionKey };

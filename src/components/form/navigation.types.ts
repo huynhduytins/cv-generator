@@ -1,6 +1,6 @@
 import type { CvSectionStep } from "@/types/cv";
 
-export type SectionValidationState = "idle" | "valid" | "invalid";
+type SectionValidationState = "idle" | "valid" | "invalid";
 
 export interface SectionNavigationItem {
   key: CvSectionStep;
