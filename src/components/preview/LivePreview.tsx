@@ -176,8 +176,6 @@ const LivePreview = () => {
       const payload: ExportPdfRequestPayload = {
         viewModel: previewModel,
         snapshotHtml: createInlineStyledSnapshot(exportRoot),
-        stylesHtml: serializeDocumentStyles(),
-        containerWidthPx: exportRoot.getBoundingClientRect().width,
       };
 
       const response = await fetch("/api/export-pdf", {

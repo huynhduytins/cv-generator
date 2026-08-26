@@ -34,36 +34,7 @@ export const POST = async (request: Request): Promise<Response> => {
                                 <meta charset="utf-8" />
                                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                                 <base href="${requestOrigin}/" />
-                                ${payload.stylesHtml}
                                 <style>
-                                  @page {
-                                    size: A4;
-                                    margin: 18px 0;
-                                  }
-
-                                  html, body {
-                                    margin: 0;
-                                    padding: 0;
-                                    width: 210mm;
-                                    min-height: calc(297mm - 36px);
-                                    background: #ffffff;
-                                  }
-
-                                  body {
-                                    margin: 0;
-                                    padding: 0;
-                                    width: 210mm;
-                                    min-height: calc(297mm - 36px);
-                                    box-sizing: border-box;
-                                    background: #ffffff;
-                                  }
-
-                                  [data-export-preview-root] {
-                                    width: 210mm;
-                                    min-height: calc(297mm - 36px);
-                                    max-width: none;
-                                    box-sizing: border-box;
-                                  }
                                 </style>
                               </head>
                               <body>
