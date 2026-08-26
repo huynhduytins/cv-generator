@@ -1,3 +1,6 @@
 allowBuilds:
+  onnxruntime-node: false
+  protobufjs: false
   puppeteer: false
+  sharp: false
   unrs-resolver: false
