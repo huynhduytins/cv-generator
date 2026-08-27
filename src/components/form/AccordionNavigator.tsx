@@ -26,6 +26,7 @@ const AccordionNavigator = ({
   onToggleSection,
   renderSectionContent,
 }: AccordionNavigatorProps) => {
+
   return (
     <div className={styles.accordion} aria-label="CV section editor">
       {items.map((item) => {

@@ -6,8 +6,6 @@
  *
  */
 
-/* eslint-disable no-restricted-globals */
-
 import {
     pipeline,
     type TextGenerationPipeline,
@@ -72,6 +70,7 @@ let activeAbortController: AbortController | null = null;
 
 self.onmessage = async (event: MessageEvent) => {
     const { type, id } = event.data;
+    console.log(event)
 
     if (type === 'abort') {
         if (activeAbortController) {

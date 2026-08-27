@@ -52,7 +52,7 @@
 }
 
 .textarea {
-  min-height: 6.5rem;
+  min-height: 9.5rem;
   resize: vertical;
 }
 
@@ -89,4 +89,27 @@
   padding: 0.4rem 0.65rem;
   background: #f8fafc;
   cursor: pointer;
+}
+
+.textareaContainer {
+  position: relative;
+}
+
+.generatorButton {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1rem;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
+
+.generator {
+  width: 2rem;
+  height: 2rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  background: #f8fafc;
+  border: 1px solid #545454;
+  display: block;
 }
