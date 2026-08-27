@@ -10,13 +10,11 @@ const sectionItems: SectionNavigationItem[] = [
     key: "personalInfo",
     label: "Personal Info",
     expanded: true,
-    validationState: "valid",
   },
   {
     key: "workExperience",
     label: "Work Experience",
     expanded: false,
-    validationState: "idle",
   },
 ];
 

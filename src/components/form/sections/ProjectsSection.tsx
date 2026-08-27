@@ -45,11 +45,16 @@ const ProjectsSection = ({
               }
             />
             <TextField
-              label="Role"
-              value={item.role}
+              label="Technologies"
+              value={item.technologies.join(", ")}
               onChange={noop}
               onDebouncedChange={(nextValue) =>
-                onUpdate(item.id, { role: nextValue })
+                onUpdate(item.id, {
+                  technologies: nextValue
+                    .split(",")
+                    .map((token) => token.trim())
+                    .filter(Boolean),
+                })
               }
             />
             <TextField

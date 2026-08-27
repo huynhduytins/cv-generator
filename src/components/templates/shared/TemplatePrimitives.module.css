@@ -95,7 +95,7 @@
 }
 
 .section {
-  margin-top: 1.5rem;
+  margin-top: 1.2rem;
 }
 
 .sectionTitle {
@@ -108,7 +108,7 @@
 }
 
 .sectionDivider {
-  margin: 0.5rem 0 0.75rem;
+  margin: 0.4rem 0 0.6rem;
   border: 0;
   border-top: 1px solid #1a1a1a;
 }
@@ -116,7 +116,7 @@
 .timelineRow {
   display: grid;
   gap: 0.35rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.6rem;
 }
 
 .timelineHeader {
@@ -260,4 +260,36 @@
 
 .skillsValues {
   font-weight: 400;
+}
+
+.projectsList {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.projectRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.projectMain {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.projectDivider {
+  color: #64748b;
+}
+
+.projectTechnologies {
+  color: #334155;
+  font-size: 0.95rem;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -124,9 +124,11 @@ const TextArea = ({
   );
 
   const handleAIGenerate = async () => {
-    const context = selectedTextRef.current || localValue;
+    const context = selectedTextRef.current;
+    const baseText = textAreaRef.current?.value ?? localValue;
+    let generatedText: string | null = null;
     try {
-      await ai.generate(context, {
+      generatedText = await ai.generate(context, {
         onToken: (token) => {
           enqueueGeneratedToken(token);
         },
@@ -137,6 +139,13 @@ const TextArea = ({
         flushRafIdRef.current = null;
       }
       flushTokenBuffer();
+      if (generatedText !== null) {
+        setLocalValue(() => {
+          const next = `${baseText}${generatedText}`;
+          onChange(next);
+          return next;
+        });
+      }
       selectedTextRef.current = "";
     }
   };
@@ -154,10 +163,38 @@ const TextArea = ({
 
   return (
     <div className={styles.fieldRoot}>
-      <label htmlFor={inputId} className={styles.labelRow}>
-        <span>{label}</span>
-        {required ? <span className={styles.required}>*</span> : null}
-      </label>
+      <div className={styles.textareaHeader}>
+        <label htmlFor={inputId} className={styles.labelRow}>
+          <span>{label}</span>
+          {required ? <span className={styles.required}>*</span> : null}
+        </label>
+        {!ai.isGenerating ? (
+          <button
+            className={styles.generatorHeaderButton}
+            type="button"
+            title="Generate with AI"
+            aria-label="Generate with AI"
+            onMouseDown={(event) => {
+              event.preventDefault();
+            }}
+            onClick={async () => {
+              await handleAIGenerate();
+            }}
+          >
+            <TbImageGeneration className={styles.generator} />
+          </button>
+        ) : (
+          <div
+            className={styles.generatorHeaderLoading}
+            role="status"
+            aria-live="polite"
+          >
+            <span className={styles.loadingSpinner} aria-hidden="true" />
+            <span>generating</span>
+            <span className={styles.loadingDots} aria-hidden="true" />
+          </div>
+        )}
+      </div>
       <div className={styles.textareaContainer}>
         <textarea
           ref={textAreaRef}
@@ -180,18 +217,6 @@ const TextArea = ({
             selectedTextRef.current = "";
           }}
         />
-        <button
-          className={styles.generatorButton}
-          type="button"
-          onMouseDown={(event) => {
-            event.preventDefault();
-          }}
-          onClick={async () => {
-            await handleAIGenerate();
-          }}
-        >
-          <TbImageGeneration className={styles.generator} />
-        </button>
       </div>
       {helperText ? <p className={styles.helperText}>{helperText}</p> : null}
       {errorText ? <p className={styles.errorText}>{errorText}</p> : null}

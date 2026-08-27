@@ -30,11 +30,6 @@ const StepNavigator = ({
           >
             <span className={styles.stepIndex}>{index + 1}</span>
             <span>{item.label}</span>
-            {item.validationState ? (
-              <span className={styles.badge} data-state={item.validationState}>
-                {item.validationState}
-              </span>
-            ) : null}
           </button>
         );
       })}

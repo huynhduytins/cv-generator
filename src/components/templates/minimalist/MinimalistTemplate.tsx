@@ -167,18 +167,43 @@ const MinimalistTemplate = forwardRef<HTMLElement, MinimalistTemplateProps>(
 
         {viewModel.projects.length > 0 ? (
           <SectionBlock title="Projects" sectionKey="projects">
-            {viewModel.projects.map((item) => (
-              <TimelineEntry
-                key={item.id}
-                title={item.name || "Project"}
-                titleHref={normalizeExternalUrl(item.url)}
-                secondaryLine={item.role || undefined}
-                secondaryLineItalic
-                meta={item.periodLabel}
-                body={item.description}
-                bullets={item.highlights}
-              />
-            ))}
+            <div className={styles.projectsList}>
+              {viewModel.projects.map((item) => {
+                const projectName = item.name || "Project";
+                const technologiesLabel = item.technologies.join(", ");
+                const projectUrl = normalizeExternalUrl(item.url);
+
+                return (
+                  <article key={item.id} className={styles.projectRow}>
+                    <div className={styles.projectMain}>
+                      {projectUrl ? (
+                        <a
+                          className={`${styles.timelineTitle} ${styles.href}`.trim()}
+                          href={projectUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {projectName}
+                        </a>
+                      ) : (
+                        <span className={styles.timelineTitle}>{projectName}</span>
+                      )}
+                      {technologiesLabel ? (
+                        <>
+                          <span className={styles.projectDivider}>|</span>
+                          <span className={styles.projectTechnologies}>
+                            {technologiesLabel}
+                          </span>
+                        </>
+                      ) : null}
+                    </div>
+                    {item.periodLabel ? (
+                      <span className={styles.timelineMeta}>{item.periodLabel}</span>
+                    ) : null}
+                  </article>
+                );
+              })}
+            </div>
           </SectionBlock>
         ) : null}
       </article>

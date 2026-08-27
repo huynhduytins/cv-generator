@@ -3,8 +3,7 @@ import type { CvPreviewViewModel } from "@/lib/mappers/cv-to-preview";
 export interface ExportPdfRequestPayload {
   viewModel: CvPreviewViewModel;
   snapshotHtml: string;
-  // stylesHtml: string;
-  // containerWidthPx: number;
+  stylesHtml: string;
 }
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
@@ -52,33 +51,21 @@ export const parseExportPdfRequestPayload = (
     throw new Error("Invalid payload: missing preview snapshot HTML.");
   }
 
-  // if (!isString(value.stylesHtml)) {
-  //   throw new Error("Invalid payload: missing style snapshot HTML.");
-  // }
+  if (!isString(value.stylesHtml)) {
+    throw new Error("Invalid payload: missing style snapshot HTML.");
+  }
 
   if (value.snapshotHtml.length > 4_000_000) {
     throw new Error("Invalid payload: preview snapshot is too large.");
   }
 
-  // if (value.stylesHtml.length > 2_000_000) {
-  //   throw new Error("Invalid payload: style snapshot is too large.");
-  // }
-
-  // if (
-  //   typeof value.containerWidthPx !== "number" ||
-  //   Number.isNaN(value.containerWidthPx)
-  // ) {
-  //   throw new Error("Invalid payload: container width is missing.");
-  // }
-
-  // if (value.containerWidthPx < 100 || value.containerWidthPx > 2500) {
-  //   throw new Error("Invalid payload: container width is out of range.");
-  // }
+  if (value.stylesHtml.length > 2_000_000) {
+    throw new Error("Invalid payload: style snapshot is too large.");
+  }
 
   return {
     viewModel: value.viewModel,
     snapshotHtml: value.snapshotHtml,
-    // stylesHtml: value.stylesHtml,
-    // containerWidthPx: value.containerWidthPx,
+    stylesHtml: value.stylesHtml,
   };
 };

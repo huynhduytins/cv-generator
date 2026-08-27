@@ -52,14 +52,6 @@ const AccordionNavigator = ({
                 }
               >
                 <span>{item.label}</span>
-                {item.validationState ? (
-                  <span
-                    className={styles.badge}
-                    data-state={item.validationState}
-                  >
-                    {item.validationState}
-                  </span>
-                ) : null}
               </button>
             </div>
 

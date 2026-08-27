@@ -2,7 +2,6 @@
 
 import AccordionNavigator from "@/components/form/AccordionNavigator";
 import StepNavigator from "@/components/form/StepNavigator";
-import type { SectionNavigationItem } from "@/components/form/navigation.types";
 import EducationSection from "@/components/form/sections/EducationSection";
 import PersonalInfoSection from "@/components/form/sections/PersonalInfoSection";
 import ProjectsSection from "@/components/form/sections/ProjectsSection";
@@ -18,13 +17,6 @@ import type { CvSectionStep } from "@/types/cv";
 const CvBuilderClient = () => {
   const controller = useCvFormController();
   const validation = validateCvDocument(controller.document);
-
-  const navigationItems: SectionNavigationItem[] = controller.sectionItems.map(
-    (item) => ({
-      ...item,
-      validationState: validation.sectionStates[item.key],
-    }),
-  );
 
   const renderSectionContent = (section: CvSectionStep) => {
     switch (section) {
@@ -85,14 +77,14 @@ const CvBuilderClient = () => {
     <CvBuilderShell
       navigation={
         <StepNavigator
-          items={navigationItems}
+          items={controller.sectionItems}
           activeStep={controller.activeStep}
           onChangeStep={controller.setActiveStep}
         />
       }
       editor={
         <AccordionNavigator
-          items={navigationItems}
+          items={controller.sectionItems}
           onToggleSection={controller.toggleSectionExpanded}
           renderSectionContent={renderSectionContent}
         />

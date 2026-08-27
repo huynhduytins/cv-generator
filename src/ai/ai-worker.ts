@@ -70,7 +70,6 @@ let activeAbortController: AbortController | null = null;
 
 self.onmessage = async (event: MessageEvent) => {
     const { type, id } = event.data;
-    console.log(event)
 
     if (type === 'abort') {
         if (activeAbortController) {
@@ -109,7 +108,7 @@ self.onmessage = async (event: MessageEvent) => {
     }
 
     const { messages, maxTokens, stopAt } = event.data;
-
+    console.log({ messages })
     // Abort any previous in-flight request
     if (activeAbortController) {
         activeAbortController.abort();
@@ -147,10 +146,10 @@ self.onmessage = async (event: MessageEvent) => {
         });
 
         const output = await gen(messages, {
-            do_sample: true,
+            do_sample: false,
             max_new_tokens: maxTokens || 256,
             streamer,
-            temperature: 0.7,
+            temperature: 0,
         });
 
         if (abortController.signal.aborted && !stoppedEarly) {

@@ -3,11 +3,7 @@ import type { StateCreator } from "zustand";
 import { createEmptyCvDocument } from "../../types/cv";
 import type {
   CvDocument,
-  Education,
   PersonalInfo,
-  Project,
-  Skill,
-  WorkExperience,
 } from "../../types/cv";
 import type { DeepPartial, Id, ISODate } from "../../types/common";
 

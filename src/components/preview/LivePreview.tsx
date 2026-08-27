@@ -26,14 +26,38 @@ const extractFilename = (contentDisposition: string | null): string => {
   return match[1];
 };
 
-const serializeDocumentStyles = (): string => {
+const serializeDocumentStyles = async (): Promise<string> => {
   const styleNodes = Array.from(
     document.querySelectorAll<HTMLStyleElement | HTMLLinkElement>(
       'style, link[rel="stylesheet"]',
     ),
   );
 
-  return styleNodes.map((node) => node.outerHTML).join("\n");
+  const styleChunks = await Promise.all(
+    styleNodes.map(async (node) => {
+      if (node.tagName.toLowerCase() === "style") {
+        return node.outerHTML;
+      }
+
+      const href = (node as HTMLLinkElement).href;
+      if (!href) {
+        return "";
+      }
+
+      try {
+        const response = await fetch(href, { credentials: "same-origin" });
+        if (!response.ok) {
+          return node.outerHTML;
+        }
+        const cssText = await response.text();
+        return `<style data-export-source="${href}">\n${cssText}\n</style>`;
+      } catch {
+        return node.outerHTML;
+      }
+    }),
+  );
+
+  return styleChunks.filter(Boolean).join("\n");
 };
 
 const waitForTransitionFrame = async (delayMs: number): Promise<void> => {
@@ -44,37 +68,10 @@ const waitForTransitionFrame = async (delayMs: number): Promise<void> => {
   });
 };
 
-const createInlineStyledSnapshot = (rootElement: HTMLElement): string => {
+const createDomSnapshot = (rootElement: HTMLElement): string => {
   const clonedRoot = rootElement.cloneNode(true) as HTMLElement;
-  const sourceElements = [
-    rootElement,
-    ...Array.from(rootElement.querySelectorAll<HTMLElement>("*")),
-  ];
-  const clonedElements = [
-    clonedRoot,
-    ...Array.from(clonedRoot.querySelectorAll<HTMLElement>("*")),
-  ];
-
-  sourceElements.forEach((sourceElement, index) => {
-    const clonedElement = clonedElements[index];
-    if (!clonedElement) {
-      return;
-    }
-
-    const computedStyle = window.getComputedStyle(sourceElement);
-    const cssText = Array.from(computedStyle).reduce(
-      (accumulator, propertyName) => {
-        return `${accumulator}${propertyName}:${computedStyle.getPropertyValue(propertyName)};`;
-      },
-      "",
-    );
-
-    clonedElement.setAttribute("style", cssText);
-  });
-
   // Keep preview styling intact in UI, but remove sheet border in exported PDF.
   clonedRoot.style.border = "none";
-
   return clonedRoot.outerHTML;
 };
 
@@ -173,9 +170,36 @@ const LivePreview = () => {
         await waitForTransitionFrame(240);
       }
 
+      const stylesHtml = await serializeDocumentStyles();
+
+      // #region agent log
+      fetch("http://127.0.0.1:7533/ingest/697de5ed-b01c-4b5c-a45d-a154083d2341", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Debug-Session-Id": "1c5af6",
+        },
+        body: JSON.stringify({
+          sessionId: "1c5af6",
+          runId: "post-fix-dom-css",
+          hypothesisId: "H16",
+          location: "LivePreview.tsx:handleGeneratePdf",
+          message: "Collected export styles from preview document",
+          data: {
+            styleNodeCount: document.querySelectorAll(
+              'style, link[rel="stylesheet"]',
+            ).length,
+            stylesLength: stylesHtml.length,
+          },
+          timestamp: Date.now(),
+        }),
+      }).catch(() => {});
+      // #endregion
+
       const payload: ExportPdfRequestPayload = {
         viewModel: previewModel,
-        snapshotHtml: createInlineStyledSnapshot(exportRoot),
+        snapshotHtml: createDomSnapshot(exportRoot),
+        stylesHtml,
       };
 
       const response = await fetch("/api/export-pdf", {

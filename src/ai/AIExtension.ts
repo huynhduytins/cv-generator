@@ -53,17 +53,158 @@ type WorkerResponseMessage =
     | WorkerStatusMessage
     | WorkerTokenMessage;
 
+const boldTokenPattern = /\*\*([^*\n][^*\n]*?)\*\*/g;
+
+const commonWords = new Set([
+    'a',
+    'an',
+    'and',
+    'are',
+    'as',
+    'at',
+    'be',
+    'by',
+    'for',
+    'from',
+    'in',
+    'is',
+    'it',
+    'of',
+    'on',
+    'or',
+    'that',
+    'the',
+    'to',
+    'with',
+    'will',
+    'this',
+    'these',
+    'those',
+    'into',
+    'through',
+    'across',
+    'within',
+    'over',
+    'under',
+]);
+
+interface HighlightCandidate {
+    score: number;
+    token: string;
+}
+
+function extractBoldTokens(text: string): string[] {
+    return Array.from(text.matchAll(boldTokenPattern)).map((match) => match[1].trim());
+}
+
+function escapeRegExp(value: string): string {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function wrapFirstOccurrenceOutsideBold(text: string, token: string): string {
+    const segments = text.split(/(\*\*[^*\n]+\*\*)/g);
+    const tokenPattern = new RegExp(`\\b${escapeRegExp(token)}\\b`);
+    let hasWrapped = false;
+
+    const wrappedSegments = segments.map((segment) => {
+        if (hasWrapped || /^\*\*[^*\n]+\*\*$/.test(segment)) {
+            return segment;
+        }
+        const nextSegment = segment.replace(tokenPattern, (match) => {
+            hasWrapped = true;
+            return `**${match}**`;
+        });
+        return nextSegment;
+    });
+
+    return hasWrapped ? wrappedSegments.join('') : text;
+}
+
+function pickHighlightCandidates(text: string, existing: Set<string>): HighlightCandidate[] {
+    const plainText = text.replace(boldTokenPattern, '$1');
+    const tokens = plainText.match(/[A-Za-z0-9][A-Za-z0-9+#./%-]*/g) ?? [];
+    const seen = new Set<string>();
+    const candidates: HighlightCandidate[] = [];
+
+    tokens.forEach((token) => {
+        const normalized = token.toLowerCase();
+        if (seen.has(normalized) || existing.has(normalized) || commonWords.has(normalized)) {
+            return;
+        }
+
+        seen.add(normalized);
+
+        const hasDigit = /\d/.test(token);
+        if (!hasDigit && token.length < 4) {
+            return;
+        }
+
+        let score = 0;
+        if (hasDigit) {
+            score += 5;
+        }
+        if (/^[A-Z]/.test(token)) {
+            score += 3;
+        }
+        if (/[+#./-]/.test(token)) {
+            score += 2;
+        }
+        if (token.length >= 7) {
+            score += 1;
+        }
+
+        if (score > 0) {
+            candidates.push({ score, token });
+        }
+    });
+
+    return candidates.sort((left, right) => {
+        if (right.score !== left.score) {
+            return right.score - left.score;
+        }
+        return right.token.length - left.token.length;
+    });
+}
+
+function enforceBoldHighlights(text: string): string {
+    let nextText = text.replace(/\*\*\s*([^*]+?)\s*\*\*/g, (_match, content: string) => {
+        return `**${content.trim()}**`;
+    });
+
+    const existingBold = extractBoldTokens(nextText);
+    if (existingBold.length >= 2) {
+        return nextText;
+    }
+
+    const existingSet = new Set(existingBold.map((token) => token.toLowerCase()));
+    const candidates = pickHighlightCandidates(nextText, existingSet);
+    let highlightCount = existingBold.length;
+
+    for (const candidate of candidates) {
+        if (highlightCount >= 2) {
+            break;
+        }
+        const wrapped = wrapFirstOccurrenceOutsideBold(nextText, candidate.token);
+        if (wrapped === nextText) {
+            continue;
+        }
+        nextText = wrapped;
+        highlightCount += 1;
+    }
+
+    return nextText;
+}
+
 function buildGenerateMessages(context: string): ChatMessage[] {
-    console.log(context)
     if (context.trim()) {
         return [
             {
                 content:
-                    'You are an HR expert helping polish resume/CV content. Rewrite the paragraph below to sound more professional, concise, and impactful, while keeping the original meaning intact. Wrap only key skills, job titles, achievements, or numbers in double asterisks for emphasis(e.g. ** React **, ** 5 years **, ** Project Manager **).Do not over- highlight — only the most important 2 - 4 terms. Return ONLY the rewritten paragraph.No explanation, no preamble.',
+                    'You are an HR expert helping polish resume/CV content. Rewrite the paragraph below to sound more professional, concise, and impactful, while keeping the original meaning intact. You must highlight exactly 2 to 4 of the most important skills, job titles, achievements, or numbers using markdown bold with double asterisks (for example: **React**, **5 years**, **Project Manager**). Return only one paragraph and do not use bullet points.',
                 role: 'system',
             },
             {
-                content: `${context}`,
+                content: `Rewrite this paragraph and keep exactly 2 to 4 bold highlights:\n\n${context}`,
                 role: 'user',
             },
         ];
@@ -127,7 +268,7 @@ export function getAIHandlers(worker: AIExtensionConfig) {
 
                 if (data.type === 'done') {
                     cleanup();
-                    resolve(data.fullText.trim());
+                    resolve(enforceBoldHighlights(data.fullText.trim()));
                     return;
                 }
 
