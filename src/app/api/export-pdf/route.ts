@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
+import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer";
+import puppeteerCore from "puppeteer-core";
 
 import { parseExportPdfRequestPayload } from "@/lib/pdf/export-types";
 
@@ -8,6 +10,38 @@ export const dynamic = "force-dynamic";
 const PDF_VIEWPORT_WIDTH = 794;
 const PDF_VIEWPORT_HEIGHT = 1122;
 const PDF_MARGIN = { top: "0px", right: "0px", bottom: "0px", left: "0px" };
+const BASE_BROWSER_ARGS = ["--no-sandbox", "--disable-setuid-sandbox"];
+
+type LaunchBrowserResult = Awaited<ReturnType<typeof puppeteerCore.launch>>;
+
+const isServerlessLinuxRuntime = (): boolean => {
+  return (
+    process.platform === "linux" &&
+    Boolean(process.env.AWS_REGION || process.env.VERCEL)
+  );
+};
+
+const launchBrowser = async (): Promise<LaunchBrowserResult> => {
+  if (isServerlessLinuxRuntime()) {
+    const executablePath =
+      process.env.PUPPETEER_EXECUTABLE_PATH ?? (await chromium.executablePath());
+
+    return puppeteerCore.launch({
+      executablePath,
+      headless: true,
+      args: [...chromium.args, ...BASE_BROWSER_ARGS],
+    });
+  }
+
+  const localExecutablePath =
+    process.env.PUPPETEER_EXECUTABLE_PATH ?? (await puppeteer.executablePath());
+
+  return puppeteerCore.launch({
+    executablePath: localExecutablePath,
+    headless: true,
+    args: BASE_BROWSER_ARGS,
+  });
+};
 
 const debugLog = (
   hypothesisId: string,
@@ -51,7 +85,7 @@ const createFilename = (fullName: string): string => {
 };
 
 export const POST = async (request: Request): Promise<Response> => {
-  let browser: Awaited<ReturnType<typeof puppeteer.launch>> | null = null;
+  let browser: LaunchBrowserResult | null = null;
 
   try {
     const rawBody = await request.json();
@@ -98,10 +132,7 @@ export const POST = async (request: Request): Promise<Response> => {
                               </body>
                             </html>`;
 
-    browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    });
+    browser = await launchBrowser();
 
     const page = await browser.newPage();
     await page.setViewport({
