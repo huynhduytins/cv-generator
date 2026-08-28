@@ -67,6 +67,8 @@ export const useCvFormController = (): CvFormController => {
   const skills = useCvStore((state) => state.document.skills);
   const projects = useCvStore((state) => state.document.projects);
 
+  console.log({ document, personalInfo })
+
   const setActiveStep = useCvStore((state) => state.setActiveStep);
   const setSectionExpanded = useCvStore((state) => state.setSectionExpanded);
   const toggleSectionExpanded = useCvStore(
