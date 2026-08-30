@@ -115,6 +115,16 @@ const WorkExperienceSection = ({
               onUpdate(item.id, { summary: nextValue })
             }
           />
+          <TextArea
+            label="Technologies"
+            value={item.technologies}
+            onChange={noop}
+            onDebouncedChange={(nextValue) =>
+              onUpdate(item.id, { technologies: nextValue })
+            }
+            placeholder="ReactJS, Nx Monorepo, NestJS, AWS"
+            helperText="Separate technologies by comma or new line"
+          />
           <ArraySectionControls
             canMoveUp={index > 0}
             canMoveDown={index < items.length - 1}

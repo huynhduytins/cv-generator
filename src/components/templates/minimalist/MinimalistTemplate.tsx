@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { FiExternalLink } from "react-icons/fi";
 import type { CvPreviewViewModel } from "@/lib/mappers/cv-to-preview";
 import type { ContactDisplayMode } from "@/store/slices/uiSlice";
 
@@ -20,6 +21,13 @@ interface SkillCategoryGroup {
 
 const splitSkillNames = (rawNames: string): string[] => {
   return rawNames
+    .split(/[\n,]+/)
+    .map((token) => token.trim())
+    .filter(Boolean);
+};
+
+const splitTechnologies = (rawValue: string): string[] => {
+  return rawValue
     .split(/[\n,]+/)
     .map((token) => token.trim())
     .filter(Boolean);
@@ -106,19 +114,34 @@ const MinimalistTemplate = forwardRef<HTMLElement, MinimalistTemplateProps>(
 
         {viewModel.workExperience.length > 0 ? (
           <SectionBlock title="Work Experience" sectionKey="workExperience">
-            {viewModel.workExperience.map((item) => (
-              <TimelineEntry
-                key={item.id}
-                title={item.company || "Company"}
-                secondaryLine={item.role || undefined}
-                secondaryLineItalic
-                meta={[item.location, item.periodLabel]
-                  .filter(Boolean)
-                  .join(" | ")}
-                body={item.summary}
-                bullets={item.highlights}
-              />
-            ))}
+            {viewModel.workExperience.map((item) => {
+              const technologies = splitTechnologies(item.technologies);
+
+              return (
+                <TimelineEntry
+                  key={item.id}
+                  title={item.company || "Company"}
+                  secondaryLine={item.role || undefined}
+                  secondaryLineItalic
+                  meta={[item.location, item.periodLabel]
+                    .filter(Boolean)
+                    .join(" | ")}
+                  body={item.summary}
+                  extraContent={
+                    technologies.length > 0 ? (
+                      <p className={styles.technologiesLine}>
+                        <span className={styles.technologiesLabel}>
+                          Technologies:
+                        </span>{" "}
+                        <span className={styles.technologiesValues}>
+                          {technologies.join(", ")}
+                        </span>
+                      </p>
+                    ) : null
+                  }
+                />
+              );
+            })}
           </SectionBlock>
         ) : null}
 
@@ -175,30 +198,41 @@ const MinimalistTemplate = forwardRef<HTMLElement, MinimalistTemplateProps>(
 
                 return (
                   <article key={item.id} className={styles.projectRow}>
-                    <div className={styles.projectMain}>
-                      {projectUrl ? (
-                        <a
-                          className={`${styles.timelineTitle} ${styles.href}`.trim()}
-                          href={projectUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {projectName}
-                        </a>
-                      ) : (
+                    <div className={styles.projectHeader}>
+                      <div className={styles.projectMain}>
                         <span className={styles.timelineTitle}>{projectName}</span>
-                      )}
-                      {technologiesLabel ? (
-                        <>
-                          <span className={styles.projectDivider}>|</span>
-                          <span className={styles.projectTechnologies}>
-                            {technologiesLabel}
-                          </span>
-                        </>
+                        {projectUrl ? (
+                          <a
+                            className={styles.timelineTitleIconLink}
+                            href={projectUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            aria-label={`Open ${projectName} link`}
+                          >
+                            <FiExternalLink
+                              className={styles.timelineTitleIcon}
+                              aria-hidden
+                            />
+                          </a>
+                        ) : null}
+                        {technologiesLabel ? (
+                          <>
+                            <span className={styles.projectDivider}>|</span>
+                            <span className={styles.projectTechnologies}>
+                              {technologiesLabel}
+                            </span>
+                          </>
+                        ) : null}
+                      </div>
+                      {item.periodLabel ? (
+                        <span className={styles.timelineMeta}>{item.periodLabel}</span>
                       ) : null}
                     </div>
-                    {item.periodLabel ? (
-                      <span className={styles.timelineMeta}>{item.periodLabel}</span>
+                    {item.description ? (
+                      <RichTextBlock
+                        text={item.description}
+                        className={styles.timelineBody}
+                      />
                     ) : null}
                   </article>
                 );

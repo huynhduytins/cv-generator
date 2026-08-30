@@ -51,7 +51,7 @@ export const createUiSlice: StateCreator<
 > = (set) => ({
   activeStep: "personalInfo",
   expandedSections: { ...defaultExpandedSections },
-  contactDisplayMode: "label",
+  contactDisplayMode: "icon",
   setActiveStep: (step) => {
     set({
       activeStep: step,

@@ -16,6 +16,7 @@ const makeWorkExperience = (id: string): WorkExperience => ({
     isPresent: true,
   },
   summary: "Built product features",
+  technologies: "React, TypeScript",
   highlights: [],
 });
 

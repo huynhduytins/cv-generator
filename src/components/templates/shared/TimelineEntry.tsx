@@ -16,7 +16,7 @@ interface TimelineEntryProps {
   metaSecondaryItalic?: boolean;
   body?: string;
   bullets?: string[];
-  footer?: ReactNode;
+  extraContent?: ReactNode;
 }
 
 const TimelineEntry = ({
@@ -30,8 +30,7 @@ const TimelineEntry = ({
   metaSecondary,
   metaSecondaryItalic = false,
   body,
-  bullets,
-  footer,
+  extraContent,
 }: TimelineEntryProps) => {
   return (
     <article className={styles.timelineRow}>
@@ -57,11 +56,18 @@ const TimelineEntry = ({
           </h3>
           {metaSecondary ? (
             <p
-              className={`${styles.timelineMetaSecondary} ${
-                metaSecondaryItalic ? styles.timelineMetaSecondaryItalic : ""
-              }`.trim()}
+              className={`${styles.timelineMetaSecondary} ${metaSecondaryItalic ? styles.timelineMetaSecondaryItalic : ""
+                }`.trim()}
             >
               {metaSecondary}
+            </p>
+          ) : null}
+          {secondaryLine ? (
+            <p
+              className={`${styles.timelineSecondary} ${secondaryLineItalic ? styles.timelineSecondaryItalic : ""
+                }`.trim()}
+            >
+              {secondaryLine}
             </p>
           ) : null}
         </div>
@@ -70,9 +76,8 @@ const TimelineEntry = ({
             {meta ? <p className={styles.timelineMeta}>{meta}</p> : null}
             {gpa ? (
               <p
-                className={`${styles.timelineMetaSecondary} ${
-                  metaSecondaryItalic ? styles.timelineMetaSecondaryItalic : ""
-                }`.trim()}
+                className={`${styles.timelineMetaSecondary} ${metaSecondaryItalic ? styles.timelineMetaSecondaryItalic : ""
+                  }`.trim()}
               >
                 {gpa}
               </p>
@@ -80,28 +85,11 @@ const TimelineEntry = ({
           </div>
         ) : null}
       </div>
-      {secondaryLine ? (
-        <p
-          className={`${styles.timelineSecondary} ${
-            secondaryLineItalic ? styles.timelineSecondaryItalic : ""
-          }`.trim()}
-        >
-          {secondaryLine}
-        </p>
-      ) : null}
       {body ? (
-        <RichTextBlock text={body} className={styles.timelineBody} />
+        <>
+          <RichTextBlock text={body} className={styles.timelineBody} extraContent={extraContent} />
+        </>
       ) : null}
-      {bullets && bullets.length > 0 ? (
-        <ul className={styles.list}>
-          {bullets.map((item, index) => (
-            <li key={`${item}-${index}`} className={styles.listItem}>
-              {item}
-            </li>
-          ))}
-        </ul>
-      ) : null}
-      {footer}
     </article>
   );
 };

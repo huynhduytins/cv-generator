@@ -5,6 +5,7 @@ import styles from "./TemplatePrimitives.module.css";
 interface RichTextBlockProps {
   text: string;
   className?: string;
+  extraContent?: ReactNode;
 }
 
 type RichBlock =
@@ -59,7 +60,7 @@ const renderInlineFormat = (text: string): ReactNode[] => {
   });
 };
 
-const RichTextBlock = ({ text, className }: RichTextBlockProps) => {
+const RichTextBlock = ({ text, className, extraContent }: RichTextBlockProps) => {
   const blocks = parseBlocks(text);
 
   if (blocks.length === 0) {
@@ -91,6 +92,7 @@ const RichTextBlock = ({ text, className }: RichTextBlockProps) => {
           </p>
         );
       })}
+      {extraContent}
     </div>
   );
 };

@@ -42,6 +42,28 @@ const sanitizeSkills = (skills: unknown): CvDocument["skills"] => {
   });
 };
 
+const sanitizeWorkExperience = (
+  workExperience: unknown,
+): CvDocument["workExperience"] => {
+  if (!Array.isArray(workExperience)) {
+    return [];
+  }
+
+  return workExperience.flatMap((item): CvDocument["workExperience"] => {
+    if (!isRecord(item)) {
+      return [];
+    }
+
+    return [
+      {
+        ...item,
+        technologies:
+          typeof item.technologies === "string" ? item.technologies : "",
+      } as CvDocument["workExperience"][number],
+    ];
+  });
+};
+
 const getInitialPersistedState = (): PersistedCvState => ({
   document: createEmptyCvDocument(),
   lastSavedAt: null,
@@ -73,6 +95,17 @@ export const migratePersistedCvState = (
         skills: sanitizeSkills(nextState.document.skills),
       },
       schemaVersion: 2,
+    };
+  }
+
+  if (fromVersion < 3) {
+    nextState = {
+      ...nextState,
+      document: {
+        ...nextState.document,
+        workExperience: sanitizeWorkExperience(nextState.document.workExperience),
+      },
+      schemaVersion: 3,
     };
   }
 

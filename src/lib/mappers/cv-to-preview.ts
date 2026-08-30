@@ -21,6 +21,7 @@ interface PreviewWorkExperienceItem {
   location: string;
   periodLabel: string;
   summary: string;
+  technologies: string;
   highlights: string[];
 }
 
@@ -182,50 +183,50 @@ const mapContacts = (document: CvDocument): PreviewContactItem[] => {
   return compact<PreviewContactItem>([
     source.location.trim()
       ? {
-          key: "location",
-          label: "Location",
-          value: source.location.trim(),
-        }
+        key: "location",
+        label: "Location",
+        value: source.location.trim(),
+      }
       : null,
     source.email.trim()
       ? {
-          key: "email",
-          label: "Email",
-          value: source.email.trim(),
-          href: toLinkIfNeeded("email", source.email.trim()),
-        }
+        key: "email",
+        label: "Email",
+        value: source.email.trim(),
+        href: toLinkIfNeeded("email", source.email.trim()),
+      }
       : null,
     source.phone.trim()
       ? {
-          key: "phone",
-          label: "Phone",
-          value: source.phone.trim(),
-          href: toLinkIfNeeded("phone", source.phone.trim()),
-        }
+        key: "phone",
+        label: "Phone",
+        value: source.phone.trim(),
+        href: toLinkIfNeeded("phone", source.phone.trim()),
+      }
       : null,
     source.website.trim()
       ? {
-          key: "website",
-          label: "Website",
-          value: source.website.trim(),
-          href: toLinkIfNeeded("website", source.website.trim()),
-        }
+        key: "website",
+        label: "Website",
+        value: source.website.trim(),
+        href: toLinkIfNeeded("website", source.website.trim()),
+      }
       : null,
     source.github.trim()
       ? {
-          key: "github",
-          label: "GitHub",
-          value: source.github.trim(),
-          href: toLinkIfNeeded("github", source.github.trim()),
-        }
+        key: "github",
+        label: "GitHub",
+        value: source.github.trim(),
+        href: toLinkIfNeeded("github", source.github.trim()),
+      }
       : null,
     source.linkedin.trim()
       ? {
-          key: "linkedin",
-          label: "LinkedIn",
-          value: source.linkedin.trim(),
-          href: toLinkIfNeeded("linkedin", source.linkedin.trim()),
-        }
+        key: "linkedin",
+        label: "LinkedIn",
+        value: source.linkedin.trim(),
+        href: toLinkIfNeeded("linkedin", source.linkedin.trim()),
+      }
       : null,
   ]);
 };
@@ -242,6 +243,8 @@ export const mapCvToPreview = (document: CvDocument): CvPreviewViewModel => {
       item.dateRange.isPresent,
     ),
     summary: item.summary.trim(),
+    technologies:
+      typeof item.technologies === "string" ? item.technologies.trim() : "",
     highlights: item.highlights.map((entry) => entry.trim()).filter(Boolean),
   }));
 

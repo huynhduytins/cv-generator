@@ -95,7 +95,7 @@
 }
 
 .section {
-  margin-top: 1.2rem;
+  margin-top: 0.75rem;
 }
 
 .sectionTitle {
@@ -116,7 +116,6 @@
 .timelineRow {
   display: grid;
   gap: 0.35rem;
-  margin-bottom: 0.6rem;
 }
 
 .timelineHeader {
@@ -138,15 +137,15 @@
 }
 
 .timelineTitleIconLink {
-  color: #2563eb;
+  color: inherit;
   display: inline-flex;
   align-items: center;
   text-decoration: none;
 }
 
 .timelineTitleIcon {
-  width: 0.9rem;
-  height: 0.9rem;
+  width: 0.72rem;
+  height: 0.72rem;
 }
 
 .timelineMeta {
@@ -187,7 +186,7 @@
 }
 
 .timelineSecondary {
-  margin: 0.12rem 0 0;
+  margin: 0.04rem 0 0;
   color: #475569;
   font-size: 0.88rem;
   font-weight: 400;
@@ -195,6 +194,21 @@
 }
 
 .timelineSecondaryItalic {
+  font-style: italic;
+}
+
+.technologiesLine {
+  margin: 0 0 0.6rem 0.95rem;
+  color: #1e293b;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.technologiesLabel {
+  font-weight: 700;
+}
+
+.technologiesValues {
   font-style: italic;
 }
 
@@ -209,7 +223,7 @@
 }
 
 .richList {
-  margin: 0.2rem 0 0.6rem;
+  margin: 0.2rem 0;
   padding-left: 1.9rem;
   list-style-position: outside;
 }
@@ -268,6 +282,11 @@
 }
 
 .projectRow {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.projectHeader {
   display: flex;
   align-items: baseline;
   justify-content: space-between;

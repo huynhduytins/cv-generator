@@ -19,6 +19,7 @@ export interface WorkExperience {
   location: string;
   dateRange: DateRange;
   summary: string;
+  technologies: string;
   highlights: string[];
 }
 
@@ -78,7 +79,7 @@ export const CV_SECTION_LABELS: Record<CvSectionStep, string> = {
   projects: "Projects",
 };
 
-export const CV_SCHEMA_VERSION = 2;
+export const CV_SCHEMA_VERSION = 3;
 
 const PERSONAL_INFO_DEFAULT: PersonalInfo = {
   fullName: "Huynh Duy Tin",
@@ -104,6 +105,7 @@ const WORK_EXPERIENCE_DEFAULT: WorkExperience[] = [
       isPresent: true
     },
     summary: "* Collaborated in an **agile**, cross-cultural team (with Australian BAs and Indian QAs) to deliver a **high-scale** enterprise platform for **Acciona** (a global leader in sustainable infrastructure), aligning technical execution with strict quality standards.\n* Architected and maintained an **Nx monorepo** housing **47 projects**, standardizing **CI/CD pipelines** and boosting cross-team delivery efficiency by **30%**.\n* Engineered an enterprise **Notification Center** featuring real-time **read/unread states**, **priority queues**, and **deep-link** navigation routing across modules.\n* Enhanced a complex internal **Grid framework** for finance/construction workflows, including editable cells, context menus, validation, infinite scroll, and Excel paste safeguards.\n* Optimized heavy data processing using **Web Workers**, eliminating UI thread blocking during multi-level valuation calculations on large datasets (10,000+ records).\n* Implemented a multi-endpoint **GraphQL layer** using **Apollo**, **NestJS**, and **module-based code generation**, achieving **100%** end-to-end type safety and significantly minimizing integration bugs.",
+    technologies: "ReactJS, Nx Monorepo, NestJS, AWS, Docker, GraphQL/Apollo, Jest, Sentry, Circle CI",
     highlights: []
   },
   {
@@ -117,6 +119,7 @@ const WORK_EXPERIENCE_DEFAULT: WorkExperience[] = [
       isPresent: false
     },
     summary: "* Implemented new features and enhancements on the company's website, resulting in a **30%** increase in user experience.\n* Transformed the company's internal projects from MeteorJS to NextJS and set up from scratch, building pages, configuring **Webpack**, and optimizing the company's website **SEO**.\n* Assisted the product team in configuring and collecting data about user activities with Google Analytics 4.",
+    technologies: "",
     highlights: []
   },
   {
@@ -130,6 +133,7 @@ const WORK_EXPERIENCE_DEFAULT: WorkExperience[] = [
       isPresent: false
     },
     summary: "* Developed a banking transaction management platform that streamlined transaction tracking and status monitoring for Shinhan Bank.\n* Collaborated with the Korean team to develop new product features.\n* Enhanced the development process by integrating a frontend workshop for building UI components, Storybook, resulting in a **20%** improvement in the development timeline.",
+    technologies: "",
     highlights: []
   }
 ];
@@ -198,6 +202,7 @@ export const createEmptyWorkExperience = (id: Id): WorkExperience => ({
   location: "",
   dateRange: createEmptyDateRange(),
   summary: "",
+  technologies: "",
   highlights: [],
 });
 
