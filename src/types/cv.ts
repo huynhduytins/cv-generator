@@ -208,7 +208,7 @@ const PROJECTS_DEFAULT: Project[] = [
       endDate: null,
       isPresent: false
     },
-    description: "* A simple bubble game where players can click on bubbles to hide them on a modern modal.",
+    description: "* A game with complex state transitions and component lifecycles within a responsive, modal-based viewport.",
     highlights: [],
     technologies: [
       "React",
@@ -216,20 +216,6 @@ const PROJECTS_DEFAULT: Project[] = [
       "Framer Motion"
     ]
   },
-  {
-    id: "16e669a2-0768-4567-9219-f16dba53d0f2" as Id,
-    name: "More Projects",
-    role: "",
-    url: "https://www.duytin.works/projects",
-    dateRange: {
-      startDate: "" as ISODate,
-      endDate: null,
-      isPresent: false
-    },
-    description: "",
-    highlights: [],
-    technologies: []
-  }
 ];
 
 const createEmptyDateRange = (): DateRange => ({
