@@ -74,24 +74,23 @@ const CvBuilderClient = () => {
   };
 
   return (
-    // <CvBuilderShell
-    //   navigation={
-    //     <StepNavigator
-    //       items={controller.sectionItems}
-    //       activeStep={controller.activeStep}
-    //       onChangeStep={controller.setActiveStep}
-    //     />
-    //   }
-    //   editor={
-    //     <AccordionNavigator
-    //       items={controller.sectionItems}
-    //       onToggleSection={controller.toggleSectionExpanded}
-    //       renderSectionContent={renderSectionContent}
-    //     />
-    //   }
-    //   preview={<LivePreview />}
-    // />
-    null
+    <CvBuilderShell
+      navigation={
+        <StepNavigator
+          items={controller.sectionItems}
+          activeStep={controller.activeStep}
+          onChangeStep={controller.setActiveStep}
+        />
+      }
+      editor={
+        <AccordionNavigator
+          items={controller.sectionItems}
+          onToggleSection={controller.toggleSectionExpanded}
+          renderSectionContent={renderSectionContent}
+        />
+      }
+      preview={<LivePreview />}
+    />
   );
 };
 
